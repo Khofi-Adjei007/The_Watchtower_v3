@@ -10,15 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# settings.py
+
+# Define the base directory of your project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Define the URL prefix for static files
+STATIC_URL = '/static/'
 
-# Quick-start development settings - unsuitable for production
+# Define the directory where Django will collect static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-atdi)ezizc)*ojl@ri#%94u2z+zk(2h8wbdzra!byg#)(ff=xx'
 
@@ -37,9 +45,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'officersHome'
+    'officersHome',
+    'tailwind',
+    'theme',
+    'django_browser_reload'
 ]
 
+# Tailwind Styles Theme Folder/Directory
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+
+
+#Middleware Starts here
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -48,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'The_Watchtower_v3.urls'
