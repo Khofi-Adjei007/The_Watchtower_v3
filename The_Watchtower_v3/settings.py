@@ -13,16 +13,19 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-# settings.py
-
 # Define the base directory of your project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Define the directory where Django will collect static files for deployment
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Define additional directories where Django will look for static files during development
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Assuming you have a 'static' directory in your project root
+]
+
 # Define the URL prefix for static files
 STATIC_URL = '/static/'
-
-# Define the directory where Django will collect static files
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 
@@ -48,7 +51,7 @@ INSTALLED_APPS = [
     'officersHome',
     'tailwind',
     'theme',
-    'django_browser_reload'
+    'django_browser_reload',
 ]
 
 # Tailwind Styles Theme Folder/Directory
@@ -139,7 +142,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

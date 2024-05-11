@@ -1,21 +1,124 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Homepage | Watchtower</title>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
-
-    <!-- Example: Include Tailwind CSS -->
-    <link href="{% static 'styles.css' %}" rel="stylesheet">
+    <title>The Watchtower | Subject Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     {% tailwind_css %}
 </head>
 
 <body>
-    <p class="text-blue-400">Home</p>
-</body>
+    <div class="bg-gray-200">
+    <div class="min-h-screen py-10 px-32 bg-cover bg-center">
+        <div class="bg-slate-300 w-[65%] grid-flow-col items-center mx-auto rounded-md shadow-lg  mt-1 ">
+            <nav class="relative flex w-full flex-wrap items-center justify-between py-2 shadow-dark-mild bg-gray-900 rounded-md lg:py-4">
+            <div class="flex w-full flex-wrap items-center justify-between px-3">
+              <!-- Left elements -->
+              <div class="flex">
+                <!-- Brand -->
+                <a class="mx-2 my-1 flex items-center lg:mb-0 lg:mt-0" href="#">
+                  <img class="me-2" src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp" style="height: 20px" alt="TE Logo" loading="lazy" />
+                  <strong class="ms-1 text-gray-300 sm:block ml-3">THE WATCHTOWER</strong>
+                </a>
+                </div>
+              <!-- Left elements -->
+          
+            
+          
+              <!-- Right elements -->
+              <ul class="list-style-none ms-auto flex flex-row ps-0 md:ps-4" data-twe-navbar-nav-ref>
+                <a class="hidden-arrow mr mr-2 flex items-center text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80"
+                href="#" id="dropdownMenuButton1" role="button" data-twe-dropdown-toggle-ref aria-expanded="false">
+                <!-- Dropdown trigger icon -->
+                <span class="[&>svg]:h-6 [&>svg]:w-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                      clip-rule="evenodd"/>
+                  </svg>
+                </span>
+                <!-- Notification counter -->
+                <span class="absolute -mt-6 ms-3 rounded-full bg-danger px-[0.50em] py-[0.25em] text-[0.6rem] font-bold leading-none text-white">8</span>
+              </a>
+
+                <li class="px-2" data-twe-nav-item-ref>
+                  <a class="flex text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80"
+                    href="#"
+                    data-twe-nav-link-ref
+                    ><img src="https://tecdn.b-cdn.net/img/new/avatars/1.jpg" class="rounded-full" style="height: 25px; width: 25px" alt="TE Avatar"  loading="lazy" />
+                    <strong class="ms-1 hidden sm:block ml-3">John</strong>
+                  </a>
+                </li>
+        
+       
+          
+        
+                <li class="relative px-2" data-twe-dropdown-ref data-twe-dropdown-alignment="end">
+                  <!-- Third dropdown trigger -->
+                  <a class="hidden-arrow mr mr-1 flex items-center text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80"
+                    href="#" id="dropdownMenuButton1" role="button" data-twe-dropdown-toggle-ref aria-expanded="false">
+                    <!-- Dropdown trigger icon -->
+                    <span class="[&>svg]:h-6 [&>svg]:w-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </a>
+                  <!-- Dropdown menu -->
+                  <ul class="absolute z-[1000] float-left hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-surface-dark data-[twe-dropdown-show]:block"
+                    aria-labelledby="dropdownMenuButton1" data-twe-dropdown-menu-ref>
+                    <!-- Dropdown menu items -->
+                    <li>
+                      <a class="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
+                        href="#" data-twe-dropdown-item-ref>Some news</a>
+                    </li>
+                    <li>
+                      <a class="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
+                        href="#" data-twe-dropdown-item-ref>Another news</a>
+                    </li>
+                    <li>
+                      <a class="block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-zinc-200/60 focus:bg-zinc-200/60 focus:outline-none active:bg-zinc-200/60 active:no-underline dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25 dark:focus:bg-neutral-800/25 dark:active:bg-neutral-800/25"
+                        href="#" data-twe-dropdown-item-ref>Something else here</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <!-- Right elements -->
+            </div>
+            </nav>
+
+            <div class="nav-links mt-5 flex flex-wrap justify-center items-center space-x-12 space-y-2 sm:space-y-0 sm:space-x-0 sm:flex-row sm:justify-center sm:gap-x-12 text-gray-900 bg-slate-300">
+                <a href="#" class="font-semibold p-2 flex items-center hover:border-b-4 border-b-gray-900" onclick="handleLinkClick(event, 'home')"><i class="ri-home-7-line mr-2"></i>Home</a>
+                <a href="#" class="font-semibold p-2 flex items-center hover:border-b-4 border-b-gray-900"><i class="ri-search-eye-fill mr-2"></i>Make a Search</a>
+                <a href="#" class="font-semibold p-2 flex items-center hover:border-b-4 border-b-gray-900"><i class="ri-planet-line mr-2"></i>Contact Tracking</a>
+                <a href="#" class="font-semibold p-2 flex items-center hover:border-b-4 border-b-gray-900"><i class="ri-progress-7-fill mr-2"></i>Unsolved</a>
+                <a href="#" class="font-semibold p-2 flex items-center hover:border-b-4 border-b-gray-900"><i class="ri-profile-fill mr-2"></i>Profiles</a>
+                <a href="#" class="font-semibold p-2 flex items-center hover:border-b-4 border-b-gray-900" ><i class="ri-logout-circle-line mr-2"></i>Logout</a>
+            </div>
+            
+            
+        </div>
+    
+    </div>
+    </div>
+
+
+
+
+
+    <script>
+            // Initialization for ES Users
+            import {
+            Collapse,
+            Dropdown,
+            initTWE,
+            } from "tw-elements";
+
+            initTWE({ Collapse, Dropdown });
+    </script>
+    </body>
 </html>
