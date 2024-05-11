@@ -1,0 +1,2 @@
+python-fullversion==3.9.*
+Django>=3.2.0
