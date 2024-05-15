@@ -139,6 +139,16 @@ USE_I18N = True
 USE_TZ = True
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'The_Watchtower_v3',
+        'HOST' : 'localhost',
+        'USER' : 'root',
+        'PASSWORD' : '@Tacitus0202'
+    }
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
