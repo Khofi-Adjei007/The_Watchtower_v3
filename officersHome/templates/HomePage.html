@@ -12,12 +12,13 @@
 </head>
 
 <body>
+    
 <div class="bg-gray-200">
 <div class="min-h-screen py-0 px-32 bg-cover bg-center">
 <div class="bg-slate-300 w-[70%] grid-flow-col items-center mx-auto rounded-md shadow-lg  mt-1 ">
 
  <nav class="relative flex w-full flex-wrap items-center justify-between py-2 border-b-4 border-blue-800 shadow-dark-mild bg-gray-900  lg:py-4">
-            <div class="flex w-full flex-wrap items-center justify-between px-3">
+<div class="flex w-full flex-wrap items-center justify-between px-3">
               <!-- Left elements -->
               <div class="flex">
                 <!-- Brand -->
@@ -31,10 +32,10 @@
             
           
               <!-- Right elements -->
-              <ul class="list-style-none ms-auto flex flex-row ps-0 md:ps-4" data-twe-navbar-nav-ref>
 
-                <!--Notification-->
-              
+<ul class="list-style-none ms-auto flex flex-row ps-0 md:ps-4" data-twe-navbar-nav-ref>
+
+<!--Notification-->    
 <button id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification" class="mr-4 relative inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400" type="button">
     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
     <path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/>
@@ -131,9 +132,7 @@
       </a>
     </div>
     
-
-
-                <!-- Button -->
+    <!-- Button -->
  <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white relative" type="button">
                     <span class="sr-only">Open user menu</span>
                     <img class="w-8 h-8 me-2 rounded-full" src="https://fbijobs.gov/sites/default/files/styles/webp/public/2022-10/forensics_1.jpg.webp?itok=wlg7N6Vl" alt="user photo">
@@ -142,6 +141,8 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
 </button> 
+
+
 <!-- Dropdown menu -->
  <div id="dropdownAvatarName" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow absolute right-1 mt-10 min-w-max transform origin-top-left dark:bg-gray-700 dark:divide-gray-600">
                     <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
@@ -161,55 +162,58 @@
                     </div>
  </div>
  </ul>
+
   <!-- Right elements -->
 </div>
  </nav>
 
      
 
-<div class="border-b border-gray-200 dark:border-gray-700 mt-4 flex items-center justify-center">
+<div id="main_navbar" class="border-b border-gray-200 dark:border-gray-700 mt-4 flex items-center justify-center">
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
-        <li class="me-2">
-            <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
+        <li class="me-2 nav_item">
+            <a href="#" id="bar1" onclick="showContent('defaultHome')" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
                 <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                <path fill-rule="evenodd" d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" clip-rule="evenodd"/>
                 </svg>Home
             </a>
         </li>
         
-        <li class="me-2">
-            <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
+        <li class="me-2 nav_item">
+            <a href="#" onclick="showContent('content1')" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
                 <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                <path fill-rule="evenodd" d="M6 5a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L15.249 6H19a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2v-5a3 3 0 0 0-3-3h-3.22l-1.14-1.682A3 3 0 0 0 9.157 6H6V5Z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd" d="M3 9a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L12.249 10H3V9Zm0 3v7a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-7H3Z" clip-rule="evenodd"/>
                 </svg>New Docket
             </a>
         </li>
-        <li class="me-2">
-            <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group" aria-current="page">
+        <li class="me-2 nav_item">
+            <a href="#" onclick="showContent('content2')" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group" aria-current="page">
                 <svg class="w-4 h-4 me-2 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
+                <path fill-rule="evenodd" d="M20 10H4v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8ZM9 13v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                <path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 1 1 0 4H4a2 2 0 0 1-2-2Z"/>
                 </svg>Do A Search
             </a>
         </li>
         <li class="me-2">
             <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
-                <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5 11.424V1a1 1 0 1 0-2 0v10.424a3.228 3.228 0 0 0 0 6.152V19a1 1 0 1 0 2 0v-1.424a3.228 3.228 0 0 0 0-6.152ZM19.25 14.5A3.243 3.243 0 0 0 17 11.424V1a1 1 0 0 0-2 0v10.424a3.227 3.227 0 0 0 0 6.152V19a1 1 0 1 0 2 0v-1.424a3.243 3.243 0 0 0 2.25-3.076Zm-6-9A3.243 3.243 0 0 0 11 2.424V1a1 1 0 0 0-2 0v1.424a3.228 3.228 0 0 0 0 6.152V19a1 1 0 1 0 2 0V8.576A3.243 3.243 0 0 0 13.25 5.5Z"/>
-                </svg>Contact Tracking
+                <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">               
+                <path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>
+                </svg>Trackings
             </a>
         </li>
         <li class="me-2">
             <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
                 <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                    <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-                </svg>Unsolved
+                <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.008-3.018a1.502 1.502 0 0 1 2.522 1.159v.024a1.44 1.44 0 0 1-1.493 1.418 1 1 0 0 0-1.037.999V14a1 1 0 1 0 2 0v-.539a3.44 3.44 0 0 0 2.529-3.256 3.502 3.502 0 0 0-7-.255 1 1 0 0 0 2 .076c.014-.398.187-.774.48-1.044Zm.982 7.026a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2h-.01Z" clip-rule="evenodd"/>
+                </svg>Unresolved
             </a>
         </li>
         <li class="me-2">
             <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
                 <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                    <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-                </svg>Unsolved
+                <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd"/>
+                </svg>Target Profiles
             </a>
         </li>
         <li>
@@ -220,6 +224,7 @@
 
 
 <div id="search_bar" class="bg-gray-300 w-full p-3 mt-5">
+
 <form class="max-w-md mx-auto w-full">   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative">
@@ -234,16 +239,16 @@
 </form>   
 </div>
   
-
 <div class="p-3 bg-gray-900 w-full h-auto mx-auto mt-6" id="content-box">
 
     <!--Action tag-->
-<div id="clicked_item" class=" p-2 px-5 w-[50%] m-2 md:w-[13%] lg:w-[10%] xl:w-[8%] flex items-center justify-center">
-<strong class="text-gray-200 italic">Happening</strong>
-</div>
+    <div id="clicked_item" class="ml-6 p-2 m-2 md:w-[13%] lg:w-[20%] xl:w-[8%] flex items-center justify-center">
+        <strong class="text-gray-200 italic" style="white-space: nowrap;"></strong>
+    </div>
     
-
-<form id="docket_registration" hidden>
+   
+    <!--Docket Registrations-->
+<form id="content1" class="content-box py-4 hidden ">
         <div class="w-full mb-4 border border-gray-200  bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
             <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
                 <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
@@ -284,12 +289,40 @@
                             <span class="sr-only">Timeline</span>
                         </button>
                     </div>
+                    
                 </div>
             </div>
 
             <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
                 <div class="">
                     <div class="grid grid-flow-col p-3">
+                        <!-- Button to toggle dropdown -->
+                        <button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Statement By <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg></button>
+
+                        <!-- Dropdown menu -->
+                        <div id="dropdownDefaultRadio" class="z-10 hidden absolute bg-white mt-12 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                                <li>
+                                    <div class="flex items-center">
+                                        <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center">
+                                        <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                        <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Checked state</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center">
+                                        <input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                        <label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Default radio</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+    
                         <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required />
                         <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Residential Address" required />
                         <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Contact" required />
@@ -316,52 +349,196 @@
         </button>
 </form>
 
-
-<div class="p-5 mb-4 border border-gray-900 rounded-lg bg-gray-900 dark:bg-gray-800 dark:border-gray-700">
-    <time class="text-lg font-semibold text-gray-900 dark:text-white">January 13th, 2022</time>
+    <!--Default Information Display-->
+<div id="defaultHome" class="content-box mt-3 overflow-y-clip p-5 mb-4 border border-gray-900 rounded-lg bg-gray-900 dark:bg-gray-800 dark:border-gray-700">
+    <time class="text-sm font-semibold text-gray-900 dark:text-white">January 13th, 2022</time>
     <ol class="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
+
+        <!--Information Container-->
         <li>
             <a href="#" class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0" src="https://www.fbi.gov/investigate/@@images/image" alt="Jese Leos image"/>
-                <div class="text-gray-600 dark:text-gray-400">
-                    <div class="text-base font-normal"><span class="font-medium text-gray-900 dark:text-white">Jese Leos</span> likes <span class="font-medium text-gray-900 dark:text-white">Bonnie Green's</span> post in <span class="font-medium text-gray-900 dark:text-white"> How to start with Flowbite library</span></div>
-                    <div class="text-sm font-normal">"I wanted to share a webinar zeroheight."</div>
-                    <span class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-                        <svg class="w-2.5 h-2.5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 .5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19ZM8.374 17.4a7.6 7.6 0 0 1-5.9-7.4c0-.83.137-1.655.406-2.441l.239.019a3.887 3.887 0 0 1 2.082 2.5 4.1 4.1 0 0 0 2.441 2.8c1.148.522 1.389 2.007.732 4.522Zm3.6-8.829a.997.997 0 0 0-.027-.225 5.456 5.456 0 0 0-2.811-3.662c-.832-.527-1.347-.854-1.486-1.89a7.584 7.584 0 0 1 8.364 2.47c-1.387.208-2.14 2.237-2.14 3.307a1.187 1.187 0 0 1-1.9 0Zm1.626 8.053-.671-2.013a1.9 1.9 0 0 1 1.771-1.757l2.032.619a7.553 7.553 0 0 1-3.132 3.151Z"/>
-                        </svg>
-                        Public
-                    </span> 
-                </div>
+            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0" src="https://www.fbi.gov/investigate/@@images/image" alt="Jese Leos image"/>
+            <div class="text-gray-600 dark:text-gray-400">
+            <div class="text-base font-normal"><strong></strong></div>
+            <div class="text-sm font-normal">"I wanted to share a webinar zeroheight."</div>
+            <span class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
+            <svg class="w-2.5 h-2.5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19ZM8.374 17.4a7.6 7.6 0 0 1-5.9-7.4c0-.83.137-1.655.406-2.441l.239.019a3.887 3.887 0 0 1 2.082 2.5 4.1 4.1 0 0 0 2.441 2.8c1.148.522 1.389 2.007.732 4.522Zm3.6-8.829a.997.997 0 0 0-.027-.225 5.456 5.456 0 0 0-2.811-3.662c-.832-.527-1.347-.854-1.486-1.89a7.584 7.584 0 0 1 8.364 2.47c-1.387.208-2.14 2.237-2.14 3.307a1.187 1.187 0 0 1-1.9 0Zm1.626 8.053-.671-2.013a1.9 1.9 0 0 1 1.771-1.757l2.032.619a7.553 7.553 0 0 1-3.132 3.151Z"/>
+            </svg>
+            Public
+            </span> 
+            </div>
             </a>
         </li>
+  
         <li>
             <a href="#" class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie Green image"/>
-                <div>
-                    <div class="text-base font-normal text-gray-600 dark:text-gray-400"><span class="font-medium text-gray-900 dark:text-white">Bonnie Green</span> react to <span class="font-medium text-gray-900 dark:text-white">Thomas Lean's</span> comment</div>
-                    <span class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-                        <svg class="w-2.5 h-2.5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="m2 13.587 3.055-3.055A4.913 4.913 0 0 1 5 10a5.006 5.006 0 0 1 5-5c.178.008.356.026.532.054l1.744-1.744A8.973 8.973 0 0 0 10 3C4.612 3 0 8.336 0 10a6.49 6.49 0 0 0 2 3.587Z"/>
-                            <path d="m12.7 8.714 6.007-6.007a1 1 0 1 0-1.414-1.414L11.286 7.3a2.98 2.98 0 0 0-.588-.21l-.035-.01a2.981 2.981 0 0 0-3.584 3.583c0 .012.008.022.01.033.05.204.12.401.211.59l-6.007 6.007a1 1 0 1 0 1.414 1.414L8.714 12.7c.189.091.386.162.59.211.011 0 .021.007.033.01a2.981 2.981 0 0 0 3.584-3.584c0-.012-.008-.023-.011-.035a3.05 3.05 0 0 0-.21-.588Z"/>
-                            <path d="M17.821 6.593 14.964 9.45a4.952 4.952 0 0 1-5.514 5.514L7.665 16.75c.767.165 1.55.25 2.335.251 6.453 0 10-5.258 10-7 0-1.166-1.637-2.874-2.179-3.407Z"/>
-                        </svg>
-                        Private
-                    </span> 
-                </div>
+            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0" src="https://www.fbi.gov/investigate/@@images/image" alt="Jese Leos image"/>
+            <div class="text-gray-600 dark:text-gray-400">
+            <div class="text-base font-normal"><span class="font-medium text-gray-900 dark:text-white">Jese Leos</span> likes <span class="font-medium text-gray-900 dark:text-white">Bonnie Green's</span> post in <span class="font-medium text-gray-900 dark:text-white"> How to start with Flowbite library</span></div>
+            <div class="text-sm font-normal">"I wanted to share a webinar zeroheight."</div>
+            <span class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
+            <svg class="w-2.5 h-2.5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19ZM8.374 17.4a7.6 7.6 0 0 1-5.9-7.4c0-.83.137-1.655.406-2.441l.239.019a3.887 3.887 0 0 1 2.082 2.5 4.1 4.1 0 0 0 2.441 2.8c1.148.522 1.389 2.007.732 4.522Zm3.6-8.829a.997.997 0 0 0-.027-.225 5.456 5.456 0 0 0-2.811-3.662c-.832-.527-1.347-.854-1.486-1.89a7.584 7.584 0 0 1 8.364 2.47c-1.387.208-2.14 2.237-2.14 3.307a1.187 1.187 0 0 1-1.9 0Zm1.626 8.053-.671-2.013a1.9 1.9 0 0 1 1.771-1.757l2.032.619a7.553 7.553 0 0 1-3.132 3.151Z"/>
+            </svg>
+            Public
+            </span> 
+            </div>
             </a>
         </li>
+
+
     </ol>
 </div>
 
 
+<!--Make a search-->
+<div id="content2"  class="content-box w-full flex justify-center items-center   p-3">
+
+    <!-- Container for the search box and results -->
+    <div class="bg-white mx-auto rounded-sm w-[90%] shadow-lg p-4">
+        <!-- Header with logo and search bar -->
+        <div class="flex items-center mb-8">
+            <!-- Logo -->
+            <img class="h-8 mr-2" src="https://i.pngimg.me/thumb/f/720/m2H7H7m2A0K9d3i8.jpg" alt="Your Company">
+            <!-- Search bar -->
+            <form class="flex items-center w-full mx-auto">   
+                <label for="voice-search" class="sr-only">Search</label>
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.15 5.6h.01m3.337 1.913h.01m-6.979 0h.01M5.541 11h.01M15 15h2.706a1.957 1.957 0 0 0 1.883-1.325A9 9 0 1 0 2.043 11.89 9.1 9.1 0 0 0 7.2 19.1a8.62 8.62 0 0 0 3.769.9A2.013 2.013 0 0 0 13 18v-.857A2.034 2.034 0 0 1 15 15Z"/>
+                        </svg>
+                    </div>
+                    <input type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Cases, History, Resolutions..." required />
+                    <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <button type="submit" class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>Search
+                </button>
+            </form>
+        </div>
+
+        <!-- Content for showing search results -->
+        <div>
+            <!-- Example search result -->
+            <div class="Right flex items-center space-x-4 mt-4 flex-wrap">
+                <label class="inline-flex items-center mr-3">
+                    <span class="ml-2 mr-3 text-sm text-gray-700 font-bold">Enable All </span>
+                </label>
+
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-500 ml-4">
+                    <span class="ml-2 text-sm text-gray-700">Images</span>
+                </label>
+
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="ml-2 text-blue-500">
+                    <span class="ml-2 text-sm text-gray-700">Files</span>
+                </label>
+
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="ml-2 form-checkbox text-blue-500">
+                    <span class="ml-2 text-sm text-gray-700">Locations</span>
+                </label>
+            </div>
+
+            <div class="result-box">
+                <a href="#"><div class="bg-gray-200 p-2 mb mt-4 rounded-md">
+                <h3 class="font-semibold text-lg mb-1 text-blue-900">Search Result Title</h3>
+                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget odio eu arcu fermentum aliquet.</p>
+                </div>
+                </a>
+
+                  <a href="#"><div class="bg-gray-200 p-2 mb mt-4 rounded-md">
+                <h3 class="font-semibold text-lg mb-1 text-blue-900">Search Result Title</h3>
+                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget odio eu arcu fermentum aliquet.</p>
+                </div>
+                </a>
+            <!-- Add more search results here -->
+            </div>
+       
+        </div>
+    </div>
+</div>
+</div>
+</div>
 </div>
 
 
-
-</div>
-</div>
 <script>
+// Get the button and dropdown menu
+    // Get the button and dropdown menu
+    const button = document.getElementById('dropdownRadioButton');
+    const dropdownMenu = document.getElementById('dropdownDefaultRadio');
+
+    // Toggle dropdown menu visibility
+    button.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close dropdown menu when clicked outside
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!button.contains(target) && !dropdownMenu.contains(target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+
+    // Hide dropdown menu when an item is selected
+    const radioInputs = dropdownMenu.querySelectorAll('input[type="radio"]');
+    radioInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            dropdownMenu.classList.add('hidden');
+        });
+    });
+
+
+
+//////////////////////////
+
+
+
+
+  // Get the container element
+  const clickedItem = document.getElementById('clicked_item');
+
+    // Get all nav bar elements
+    const navBars = document.querySelectorAll('li');
+
+// Add click event listener to each nav bar
+navBars.forEach(navBar => {
+    navBar.addEventListener('click', () => {
+        // Get the text content of the clicked nav bar
+        const navBarName = navBar.textContent.trim();
+
+        // Update the content of the clicked_item container
+        clickedItem.querySelector('strong').textContent = navBarName;
+    });
+});
+
+
+ function showContent(contentId) {
+      // Hide all content boxes
+      var contentBoxes = document.getElementsByClassName("content-box");
+      for (var i = 0; i < contentBoxes.length; i++) {
+          contentBoxes[i].classList.add("hidden");
+      }
+
+      // Show the selected content box
+      document.getElementById(contentId).classList.remove("hidden");
+  }
+
+  // Show the default content when the page loads
+  showContent('home');
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const button = document.getElementById('dropdownNotificationButton');
     const dropdown = document.getElementById('dropdownNotification');})
@@ -418,6 +595,7 @@ tabs.forEach(tab => {
         tab.classList.add('active');
     });
 });
+
 
 </script>
 </body>
