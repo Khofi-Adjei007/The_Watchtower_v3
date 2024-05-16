@@ -30,6 +30,7 @@ def redirect_with_delay(request, url, delay_seconds=3):
 
 
 # Create your views here.
+@login_required
 def HomePage(request):
     return render(request, 'HomePage.html')
 
