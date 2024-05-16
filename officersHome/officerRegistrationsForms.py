@@ -132,6 +132,17 @@ class officerRegistrationsForms(forms.Form):
             raise forms.ValidationError('Image is required')
         return officer_image
     
+
+    officer_stationRank = forms.ChoiceField(label='Select Current Station Rank',
+                                        choices=NewOfficerRegistration.OFFICER_STATION_RANK_CHOICES)
+    def clean_officer_stationRank(self):
+        officer_stationRank = self.cleaned_data.get('officer_stationRank')
+        if not officer_stationRank:
+            raise forms.ValidationError('Station Rank is required')
+        return officer_stationRank
+
+
+
     password = forms.CharField(label="Enter Password",max_length=128, widget=forms.PasswordInput)
     def clean_password(self):
         password = self.cleaned_data.get('password')

@@ -179,6 +179,9 @@
             </a>
         </li>
         
+
+        {{if user.is_authenticated}}
+        {{if user.}}
         <li class="me-2 nav_item">
             <a href="#" onclick="showContent('content1')" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group">
                 <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -187,6 +190,8 @@
                 </svg>New Docket
             </a>
         </li>
+        {{endif}}
+
         <li class="me-2 nav_item">
             <a href="#" onclick="showContent('content2')" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600 dark:hover:text-blue-600 group" aria-current="page">
                 <svg class="w-4 h-4 me-2 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">

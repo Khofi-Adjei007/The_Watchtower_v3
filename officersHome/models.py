@@ -121,7 +121,21 @@ class NewOfficerRegistration(models.Model):
 
     officer_operations_department = models.CharField(max_length=250, choices=OFFICER_DEPARTMENT_CHOICES)
     officer_profile_image = models.ImageField(upload_to='')
+
+    OFFICER_STATION_RANK_CHOICES = [
+            ('DC', 'District Commander'),
+            ('DIVC', 'Divisional Commander'),
+            ('SO', 'Station Officer'),
+            ('DSO', 'Deputy Station Officer'),
+            ('SSI', 'Station Sergeants and Inspector'),
+            ('OO', 'Other Officer/Constables'),
+        ]
+    officer_stationRank = models.CharField(max_length=100, choices=OFFICER_STATION_RANK_CHOICES)
+    
     password = models.CharField(max_length=128)
+
+
+
 
 
 

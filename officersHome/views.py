@@ -57,6 +57,7 @@ def officer_registrations(request):
             officer_current_station = form.cleaned_data['officer_current_station']
             officer_operations_department = form.cleaned_data['officer_operations_department']
             officer_profile_image = form.cleaned_data['officer_profile_image']
+            officer_stationRank = form.cleaned_data['officer_stationRank']
             password = form.cleaned_data['password']
             hashed_password = make_password(password)
 
@@ -84,6 +85,7 @@ def officer_registrations(request):
                 officer_current_station=officer_current_station,
                 officer_operations_department=officer_operations_department,
                 officer_profile_image=officer_profile_image,
+                officer_stationRank=officer_stationRank,
             )
 
             # Display success message
@@ -94,3 +96,44 @@ def officer_registrations(request):
     else:
         form = officerRegistrationsForms()
     return render(request, 'officer_registrations.html', {"form": form})
+
+
+# officer login views
+def officer_login(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = officer_loginForms(request.POST)
+        
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            
+            # Authenticate user
+            user = authenticate(username=username, password=password)
+            print(f"User object: {user}")
+            if user is not None:
+                login(request, user)
+                request.session['user_id'] = user.id
+                request.session['username'] = user.username
+                request.session['officer_staff_ID'] = user.newofficerregistration.officer_staff_ID
+                request.session['officer_current_rank'] = user.newofficerregistration.officer_current_rank
+
+                # Redirect to the desired page
+                return redirect('HomePage')
+            else:
+                error_message = 'Invalid username or password'
+        else:
+            # Form is invalid
+            error_message = 'Invalid form data'
+            print("Form is invalid")
+    else:
+        form = officer_loginForms()
+    return render(request, 'officer_login.html', {'form': form, 'error_message': error_message})
+
+
+
+# officer logout views
+def officer_logout(request):
+    logout(request)
+    request.session.clear()
+    return HttpResponseRedirect(reverse('officer_login'))
