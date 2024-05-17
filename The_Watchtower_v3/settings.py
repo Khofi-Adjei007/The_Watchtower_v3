@@ -67,13 +67,14 @@ NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 #Middleware Starts here
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'officersHome.middlewares.NoCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'officersHome.middlewares.RedirectOnBackMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'The_Watchtower_v3.urls'
@@ -157,3 +158,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Store sessions in the database
+SESSION_COOKIE_AGE = 1209600  # Two weeks, in seconds
+SESSION_SAVE_EVERY_REQUEST = True  # Save the session to the database on every request
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Do not expire session when the browser closes
+
+# Security settings
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+
+# settings.py
+LOGIN_URL = '/accounts/login/'  # Update this to your actual login URL
