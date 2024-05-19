@@ -17,8 +17,13 @@ from .officerRegistrationsForms import officerRegistrationsForms, officer_loginF
 from django.contrib.auth.hashers import make_password, check_password
 import json
 from io import BytesIO
-
-
+from django.shortcuts import render, redirect
+from .docketStatementForms import StatementForm
+from .models import Statements, Docket
+from reportlab.pdfgen import canvas
+from django.core.mail import send_mail
+from django.conf import settings
+import os
 
 
 
@@ -110,3 +115,38 @@ def officer_logout(request):
     logout(request)
     request.session.flush()  # This ensures the session is completely cleared
     return redirect(reverse('officer_login'))
+
+# full Casebox details
+def full_casebox_details(request):
+    return render(request, 'Casebox.html')
+
+
+
+
+###################################################################################
+#Docket Process Views Starts Here
+def index(request):
+    if request.method == 'POST':
+        form = StatementForm(request.POST)
+        if form.is_valid():
+            statement = form.save()
+            # Handle statement queuing logic (store in session or similar)
+            queued_statements = request.session.get('queued_statements', [])
+            queued_statements.append(statement.id)
+            request.session['queued_statements'] = queued_statements
+            form = StatementForm()  # Reset the form for the next input
+    else:
+        form = StatementForm()
+    return render(request, 'HomePage.html', {'form': form})
+
+
+def register_docket(request):
+    queued_statements = request.session.get('queued_statements', [])
+    if queued_statements:
+        statements = Statements.objects.filter(id__in=queued_statements)
+        docket = Docket.objects.create()
+        docket.statements.set(statements)
+        docket.save()
+        request.session['queued_statements'] = []  # Clear the session queue
+    return redirect(reverse('HomePage'))
+

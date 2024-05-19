@@ -19,13 +19,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Define the directory where Django will collect static files for deployment
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+
 # Define additional directories where Django will look for static files during development
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Assuming you have a 'static' directory in your project root
+    BASE_DIR / '',  # Assuming you have a 'static' directory in your project root
 ]
 
 # Define the URL prefix for static files
 STATIC_URL = '/static/'
+
 
 
 

@@ -89,7 +89,26 @@ class NewOfficerRegistration(models.Model):
     ]
     officer_qualification = models.CharField(max_length=250, choices=EDUCATION_QUALIFICATION_CHOICES)
     officer_date_of_birth = models.DateField()
-    officer_operations_region = models.CharField(max_length=250)
+
+    OFFICER_OPERATIONS_REGION = [
+    ('GA', 'Greater Accra'),
+    ('AR', 'Ahafo Region'),
+    ('ARR', 'Ashanti Region'),
+    ('BR', 'Bono Region'),
+    ('BER', 'Bono East Region'),
+    ('CR', 'Central Region'),
+    ('ER', 'Eastern Region'),
+    ('NER', 'North East Region'),
+    ('NR', 'Northern Region'),
+    ('OR', 'Oti Region'),
+    ('SR', 'Savannah Region'),
+    ('UER', 'Upper East Region'),
+    ('UWR', 'Upper West Region'),
+    ('VR', 'Volta Region'),
+    ('WR', 'Western Region'),
+    ('WNR', 'Western North Region')
+    ]
+    officer_operations_region = models.CharField(max_length=250, choices=OFFICER_OPERATIONS_REGION)
 
         # Constants for officer departments
     DEPARTMENT_Criminal_InvestigationDepartment = 'CID'
@@ -119,6 +138,7 @@ class NewOfficerRegistration(models.Model):
 
     officer_operations_department = models.CharField(max_length=250, choices=OFFICER_DEPARTMENT_CHOICES)
     officer_profile_image = models.ImageField(upload_to='profileImages/', blank=True, null=True)
+
     OFFICER_STATION_RANK_CHOICES = [
             ('DC', 'District Commander'),
             ('DIVC', 'Divisional Commander'),
@@ -127,14 +147,38 @@ class NewOfficerRegistration(models.Model):
             ('SSI', 'Station Sergeants and Inspector'),
             ('OO', 'Other Officer/Constables'),
         ]
-    
     officer_stationRank = models.CharField(max_length=100, choices=OFFICER_STATION_RANK_CHOICES)
+
+
+    OFFICER_OPERATIONS_DISTRICT = [
+    ('GA', 'Greater Accra'),
+    ('AR', 'Ahafo Region'),
+    ('ARR', 'Ashanti Region'),
+    ('BR', 'Bono Region'),
+    ('BER', 'Bono East Region'),
+    ('CR', 'Central Region'),
+    ('ER', 'Eastern Region'),
+    ('NER', 'North East Region'),
+    ('NR', 'Northern Region'),
+    ('OR', 'Oti Region'),
+    ('SR', 'Savannah Region'),
+    ('UER', 'Upper East Region'),
+    ('UWR', 'Upper West Region'),
+    ('VR', 'Volta Region'),
+    ('WR', 'Western Region'),
+    ('WNR', 'Western North Region')
+    ]    
+    officer_Operationsdistrict = models.CharField(max_length=250, choices=OFFICER_OPERATIONS_DISTRICT)
     password = models.CharField(max_length=128)
 
 
 
 
 
+class OfficerStationGroup(models.Model):
+    station_name = models.CharField(max_length=250)
+    user_count = models.IntegerField()
+    
 
 class ChargeOfficer(NewOfficerRegistration):
     ability_to_make_report = models.BooleanField(default=False)
@@ -177,3 +221,35 @@ class Suspect(Target):
 
 class Witness(Target):
     relationship_to_witness = models.CharField(max_length=100)
+
+
+
+#Dockets and handlings
+class Statements(models.Model):
+    CATEGORY_CHOICES = [
+        ('case', 'Case Statement'),
+        ('victim', 'Victim'),
+        ('victim_witness', 'Victim Witness'),
+        ('suspect', 'Suspect'),
+        ('suspect_witness', 'Suspect Witness'),
+    ]
+    
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
+    contact = models.CharField(max_length=15)
+    date_of_birth = models.DateField()
+    hometown = models.CharField(max_length=100)
+    gender = models.CharField(max_length=10)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.get_category_display()} - {self.name}"
+
+class Docket(models.Model):
+    statements = models.ManyToManyField(Statements)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Docket created on {self.created_at}"

@@ -17,7 +17,7 @@
 
 
 <!--Start of Containing Body-->
-<div class="bg-slate-300 w-[70%] grid-flow-col items-center mx-auto rounded-md shadow-lg  mt-1 ">
+<div class="bg-slate-300 w-[70%] grid-flow-col items-center mx-auto rounded-md shadow-lg ">
   
     
 <nav class="relative flex w-full flex-wrap items-center justify-between py-2 border-b-4 border-blue-800 shadow-dark-mild bg-gray-900  lg:py-4">
@@ -54,7 +54,7 @@
 Notifications
 </div>
 <div class="divide-y divide-gray-100 dark:divide-gray-700">
-<a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
+<a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700"> 
 <div class="flex-shrink-0">
 <img class="rounded-full w-11 h-11" src="/docs/images/people/profile-picture-1.jpg" alt="Jese image">
 <div class="absolute flex items-center justify-center w-5 h-5 ms-6 -mt-5 bg-blue-600 border border-white rounded-full dark:border-gray-800">
@@ -265,12 +265,12 @@ Officer Name Here
 </div>
 </form>   
 </div>
- <!--End of Search Bar Starts-->
+ <!--End of Search Bar-->
  
  
 
  <!--Start of Content Box and its content-->
-<div class="p-3 bg-gray-900 w-full h-auto mx-auto mt-6" id="content-box">
+ <div class="p-3 bg-gray-900 w-full h-auto mx-auto mt-6 overflow-auto max-h-screen" id="content-box">
 
  
 <!--Box to Contain Name-->
@@ -281,9 +281,27 @@ Officer Name Here
 
 
 <!--Regular Docket Registrations Forms Here-->
+<div class="container mx-auto">
+  <form id="content1" class="content-box py-4 hidden p-6 rounded-lg shadow-lg">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
+          Queue Case Statement
+      </button>
+  </form>
+
+  <form method="post" action="{% url 'register_docket' %}">
+      {% csrf_token %}
+      <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600 mt-4">
+          Register Docket
+      </button>
+  </form>
+</div>
+
+
 <form id="content1" class="content-box py-4 hidden">
 {% csrf_token %}
-
 <div class="w-full mb-4 border border-gray-200  bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
 <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
 <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
@@ -350,30 +368,48 @@ Officer Name Here
 <li>
 <div class="flex items-center">
 <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim</label>
+<label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Case Statement</label>
 </div>
 </li>
 <li>
 <div class="flex items-center">
 <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Checked state</label>
+<label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim</label>
 </div>
 </li>
 <li>
 <div class="flex items-center">
 <input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Default radio</label>
+<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim Witness</label>
+</div>
+</li>
+<li>
+<div class="flex items-center">
+<input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect</label>
+</div>
+</li>
+<li>
+<div class="flex items-center">
+<input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect Witness</label>
 </div>
 </li>
 </ul>
 </div>
 
+
+
+
+<div class="flex p-2">
 <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required />
 <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Residential Address" required />
 <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Contact" required />
 <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Date of Birth" required />
 <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Hometown" required />
 <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Gender" required />
+</div>
+
 </div>
 </div>
 <label for="editor" class="sr-only">Publish post</label>
@@ -382,17 +418,20 @@ Officer Name Here
 </div>
 
 
-<button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
+<button id="dropDocketBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
 Drop Docket
 </button>
 
-<button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
+<button id="previewBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
 Preview
 </button>
 
 <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
-Register Docket
+  Que Case Statement
+</button>
 
+<button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
+Register Docket
 </button>
 </form>
 <!--Regular Docket Registrations Forms Ends Here-->
@@ -402,35 +441,37 @@ Register Docket
 <form id="content3" action="" class="content-box py-4 hidden">
 {% csrf_token %}
 
-<ol class="relative border-s border-gray-200 dark:border-gray-700 ml-5 cursor-pointer">
+<ol id="paginated-list" class="relative border-s border-gray-200 dark:border-gray-700 ml-5">
 
-<li class="mb-10 ms-6">            
+<li class="mb-10 ms-6 cursor-pointer">            
 <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
 <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
 <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
 </svg>
 </span>
-<h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">Flowbite Application UI v2.0.0 <span class="bg-green-600 text-green-600 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">Latest</span></h3>
-<time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on January 13th, 2022</time>
-<p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order E-commerce & Marketing pages.</p>
+<h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">The State Vs Jack Ntim and Co.<span class="bg-green-600 text-green-600 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">New <span> | </span> Attention Required</span></h3>
+<time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Docket Registered on 18th May, 2024</time>
+<p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
 <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"><svg class="w-3.5 h-3.5 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-<path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-<path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-</svg> Download ZIP</a>
+<path d="M11 21V2.352A3.451 3.451 0 0 0 9.5 2a3.5 3.5 0 0 0-3.261 2.238A3.5 3.5 0 0 0 4.04 8.015a3.518 3.518 0 0 0-.766 1.128c-.042.1-.064.209-.1.313a3.34 3.34 0 0 0-.106.344 3.463 3.463 0 0 0 .02 1.468A4.017 4.017 0 0 0 2.3 12.5l-.015.036a3.861 3.861 0 0 0-.216.779A3.968 3.968 0 0 0 2 14c.003.24.027.48.072.716a4 4 0 0 0 .235.832c.006.014.015.027.021.041a3.85 3.85 0 0 0 .417.727c.105.146.219.285.342.415.072.076.148.146.225.216.1.091.205.179.315.26.11.081.2.14.308.2.02.013.039.028.059.04v.053a3.506 3.506 0 0 0 3.03 3.469 3.426 3.426 0 0 0 4.154.577A.972.972 0 0 1 11 21Zm10.934-7.68a3.956 3.956 0 0 0-.215-.779l-.017-.038a4.016 4.016 0 0 0-.79-1.235 3.417 3.417 0 0 0 .017-1.468 3.387 3.387 0 0 0-.1-.333c-.034-.108-.057-.22-.1-.324a3.517 3.517 0 0 0-.766-1.128 3.5 3.5 0 0 0-2.202-3.777A3.5 3.5 0 0 0 14.5 2a3.451 3.451 0 0 0-1.5.352V21a.972.972 0 0 1-.184.546 3.426 3.426 0 0 0 4.154-.577A3.506 3.506 0 0 0 20 17.5v-.049c.02-.012.039-.027.059-.04.106-.064.208-.13.308-.2s.214-.169.315-.26c.077-.07.153-.14.225-.216a4.007 4.007 0 0 0 .459-.588c.115-.176.215-.361.3-.554.006-.014.015-.027.021-.041.087-.213.156-.434.205-.659.013-.057.024-.115.035-.173.046-.237.07-.478.073-.72a3.948 3.948 0 0 0-.066-.68Z"/>
+</svg> Delegate Docket  & Assign</a>
 </li>
 
-<li class="mb-10 ms-6">
+<li class="mb-10 ms-6 cursor-pointer">
 <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
 <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
 <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
 </svg>
 </span>
-<h3 class="mb-1 text-lg font-semibold text-gray-900 dark:text-white">Flowbite Figma v1.3.0</h3>
-<time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 7th, 2021</time>
-<p class="text-base font-normal text-gray-500 dark:text-gray-400">All of the pages and components are first designed in Figma and we keep a parity between the two versions even as we update the project.</p>
+<h3 class="mb-1 text-lg font-semibold text-gray-900 dark:text-white">Selom Betepe vs Twellium Ghana</h3>
+<time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Docketed started 4th November, 2023 <span> | </span> 4 Days ago</time>
+<p class="text-base font-normal text-gray-500 dark:text-gray-400">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. </p>
+<a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"><svg class="w-3.5 h-3.5 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M11 21V2.352A3.451 3.451 0 0 0 9.5 2a3.5 3.5 0 0 0-3.261 2.238A3.5 3.5 0 0 0 4.04 8.015a3.518 3.518 0 0 0-.766 1.128c-.042.1-.064.209-.1.313a3.34 3.34 0 0 0-.106.344 3.463 3.463 0 0 0 .02 1.468A4.017 4.017 0 0 0 2.3 12.5l-.015.036a3.861 3.861 0 0 0-.216.779A3.968 3.968 0 0 0 2 14c.003.24.027.48.072.716a4 4 0 0 0 .235.832c.006.014.015.027.021.041a3.85 3.85 0 0 0 .417.727c.105.146.219.285.342.415.072.076.148.146.225.216.1.091.205.179.315.26.11.081.2.14.308.2.02.013.039.028.059.04v.053a3.506 3.506 0 0 0 3.03 3.469 3.426 3.426 0 0 0 4.154.577A.972.972 0 0 1 11 21Zm10.934-7.68a3.956 3.956 0 0 0-.215-.779l-.017-.038a4.016 4.016 0 0 0-.79-1.235 3.417 3.417 0 0 0 .017-1.468 3.387 3.387 0 0 0-.1-.333c-.034-.108-.057-.22-.1-.324a3.517 3.517 0 0 0-.766-1.128 3.5 3.5 0 0 0-2.202-3.777A3.5 3.5 0 0 0 14.5 2a3.451 3.451 0 0 0-1.5.352V21a.972.972 0 0 1-.184.546 3.426 3.426 0 0 0 4.154-.577A3.506 3.506 0 0 0 20 17.5v-.049c.02-.012.039-.027.059-.04.106-.064.208-.13.308-.2s.214-.169.315-.26c.077-.07.153-.14.225-.216a4.007 4.007 0 0 0 .459-.588c.115-.176.215-.361.3-.554.006-.014.015-.027.021-.041.087-.213.156-.434.205-.659.013-.057.024-.115.035-.173.046-.237.07-.478.073-.72a3.948 3.948 0 0 0-.066-.68Z"/>
+    </svg> Docket Assigned to Nicholas Bentu (CID)  <span> | </span>  See Progress</a>
 </li>
 
-<li class="ms-6">
+<li class="ms-6 cursor-pointer">
 <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
 <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
 <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
@@ -440,8 +481,30 @@ Register Docket
 <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Released on December 2nd, 2021</time>
 <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and interactive elements built on top of Tailwind CSS.</p>
 </li>
+</ol>
 
-</ol>    
+<div id="pagination-controls" class="flex flex-col items-center mt-9">
+<!-- Help text -->
+<span class="text-sm text-gray-700 dark:text-gray-400">
+Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span class="font-semibold text-gray-900 dark:text-white">5</span> of <span class="font-semibold text-gray-900 dark:text-white">100</span> Entries
+</span>
+<div class="inline-flex mt-2 xs:mt-0">
+<!-- Buttons -->
+<button id="prev" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+<svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+</svg>
+Prev
+</button>
+<button id="next" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+Next
+<svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+</svg>
+</button>
+</div>
+</div>
+
 </form>
 <!--Station officer Docketing Box Ends Here-->
 
@@ -496,10 +559,10 @@ Public
 <div class="bg-white mx-auto rounded-sm w-[90%] shadow-lg p-4">
 
 <!-- Header with logo and search bar -->
-<div class="flex items-center mb-8">
+<div class="flex items-center mb-8"> 
 
 <!-- Logo -->
-<img class="h-8 mr-2" src="https://i.pngimg.me/thumb/f/720/m2H7H7m2A0K9d3i8.jpg" alt="Your Company">
+<img class="h-8 mr-2" src="{% static 'staticfiles/admin/img/download.png' %}" alt="Your Company">
 
 <!-- Search bar -->
 <form class="flex items-center w-full mx-auto">   
@@ -569,123 +632,284 @@ Public
 </div>
 
 </div>
-</div>
-</div>
-<!--Make a seach box content Ends-->
+<!--Make a seach box content Ends -->
 
 </div>
 </div>
+<!--Make a seach box content Ends Here-->
+
 </div>
+</div>
+<!--Endofof Containing Body-->
 
 
-
+</div>
 <script>
-   // Notification dropdown menu
-document.addEventListener('DOMContentLoaded', () => {
-  const dropdownButtons = [
-    {
-      button: document.getElementById('dropdownNotificationNameButton'),
-      dropdown: document.getElementById('dropdownNotification')
-    },
-    {
-      button: document.getElementById('dropdownNotificationNameButton'),
-      dropdown: document.getElementById('dropdownNotification')
-    }
-  ];
+    //Pagination Functionlities
+    document.addEventListener('DOMContentLoaded', (event) => {
+  const list = document.querySelectorAll('#paginated-list li');
+  const nextButton = document.getElementById('next');
+  const prevButton = document.getElementById('prev');
+  const itemsPerPage = 5;
+  let currentPage = 1;
 
-  dropdownButtons.forEach(({ button, dropdown }) => {
+  function showPage(page) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    list.forEach((item, index) => {
+      if (index >= start && index < end) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    prevButton.disabled = page === 1;
+    nextButton.disabled = end >= list.length;
+  }
+
+  nextButton.addEventListener('click', () => {
+    currentPage++;
+    showPage(currentPage);
+  });
+
+  prevButton.addEventListener('click', () => {
+    currentPage--;
+    showPage(currentPage);
+  });
+
+  // Initialize the pagination
+  showPage(currentPage);
+});
+
+
+    // Drop Docket and Preview Functions
+    document.addEventListener('DOMContentLoaded', function() {
+    const dropDocketBtn = document.getElementById('dropDocketBtn');
+    const previewBtn = document.getElementById('previewBtn');
+    const form = document.getElementById('content1');
+    const previewContainer = document.getElementById('previewContainer');
+    const pdfPreview = document.getElementById('pdfPreview');
+
+    // Event listener for Drop Docket button
+    dropDocketBtn.addEventListener('click', function() {
+        form.reset(); // Resets the form
+    });
+
+    // Event listener for Preview button
+    previewBtn.addEventListener('click', function() {
+        const formData = new FormData(form);
+
+        // Create a new jsPDF instance
+        const pdf = new jsPDF();
+
+        // Set up the content of the PDF
+        let yPosition = 10;
+        formData.forEach((value, key) => {
+            pdf.text(`${key}: ${value}`, 10, yPosition);
+            yPosition += 10;
+        });
+
+        // Generate PDF content as data URI
+        const pdfContent = pdf.output('datauristring');
+
+        // Set the PDF content to the iframe source
+        pdfPreview.src = pdfContent;
+
+        // Show the preview container
+        previewContainer.style.display = 'block';
+    });
+});
+
+
+
+
+
+    //Notification dropdown menu
+    document.addEventListener('DOMContentLoaded', (event) => {
+    const dropdownButtons = [
+      {
+        button: document.getElementById('dropdownNotificationNameButton'),
+        dropdown: document.getElementById('dropdownNotification')
+      },
+      {
+        button: document.getElementById('dropdownNotificationNameButton'),
+        dropdown: document.getElementById('dropdownNotification')
+      }
+    ];
+
+    dropdownButtons.forEach(({ button, dropdown }) => {
+      button.addEventListener('click', (event) => {
+        dropdown.classList.toggle('hidden');
+        event.stopPropagation();
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      dropdownButtons.forEach(({ dropdown }) => {
+        if (!dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      });
+    });
+
+    dropdownButtons.forEach(({ dropdown }) => {
+      dropdown.addEventListener('click', (event) => {
+        event.stopPropagation();
+      });
+    });
+  });
+
+
+// Acocunt dropdown menu
+document.addEventListener('DOMContentLoaded', (event) => {
+    const button = document.getElementById('dropdownOfficerNameButton');
+    const dropdown = document.getElementById('dropdownOfficerName');
+
     button.addEventListener('click', (event) => {
       dropdown.classList.toggle('hidden');
       event.stopPropagation();
     });
+
+    document.addEventListener('click', (event) => {
+      if (!dropdown.classList.contains('hidden')) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    dropdown.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
   });
 
-  document.addEventListener('click', (event) => {
-    dropdownButtons.forEach(({ dropdown }) => {
-      if (!dropdown.classList.contains('hidden')) {
+
+    // Get the button and dropdown menu
+    const button = document.getElementById('dropdownRadioButton');
+    const dropdownMenu = document.getElementById('dropdownDefaultRadio');
+
+    // Toggle dropdown menu visibility
+    button.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close dropdown menu when clicked outside
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!button.contains(target) && !dropdownMenu.contains(target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+
+    // Hide dropdown menu when an item is selected
+    const radioInputs = dropdownMenu.querySelectorAll('input[type="radio"]');
+    radioInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            dropdownMenu.classList.add('hidden');
+        });
+    });
+
+
+
+//////////////////////////
+
+
+
+
+  // Get the container element
+  const clickedItem = document.getElementById('clicked_item');
+
+    // Get all nav bar elements
+    const navBars = document.querySelectorAll('li');
+
+// Add click event listener to each nav bar
+navBars.forEach(navBar => {
+    navBar.addEventListener('click', () => {
+        // Get the text content of the clicked nav bar
+        const navBarName = navBar.textContent.trim();
+
+        // Update the content of the clicked_item container
+        clickedItem.querySelector('strong').textContent = navBarName;
+    });
+});
+
+
+
+ function showContent(contentId) {
+      // Hide all content boxes
+      var contentBoxes = document.getElementsByClassName("content-box");
+      for (var i = 0; i < contentBoxes.length; i++) {
+          contentBoxes[i].classList.add("hidden");
+      }
+
+      // Show the selected content box
+      document.getElementById(contentId).classList.remove("hidden");
+  }
+
+  // Show the default content when the page loads
+  showContent('home');
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('dropdownNotificationButton');
+    const dropdown = document.getElementById('dropdownNotification');})
+
+// Dropdown menu for user avatar
+document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('dropdownAvatarNameButton');
+    const dropdown = document.getElementById('dropdownAvatarName');
+
+    // Toggle dropdown menu visibility
+    button.addEventListener('click', function () {
+      dropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
         dropdown.classList.add('hidden');
       }
     });
   });
 
-  dropdownButtons.forEach(({ dropdown }) => {
-    dropdown.addEventListener('click', (event) => {
-      event.stopPropagation();
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('dropdownNotificationButton');
+    const dropdown = document.getElementById('dropdownNotification');
+
+    // Toggle dropdown menu visibility
+    button.addEventListener('click', function () {
+      const buttonRect = button.getBoundingClientRect();
+      dropdown.style.top = `${buttonRect.bottom}px`;
+      dropdown.style.left = `${buttonRect.left}px`;
+      dropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.add('hidden');
+      }
     });
   });
-});
 
-// Account dropdown menu
-document.addEventListener('DOMContentLoaded', () => {
-  const button = document.getElementById('dropdownOfficerNameButton');
-  const dropdown = document.getElementById('dropdownOfficerName');
+            // Get all the tabs
+const tabs = document.querySelectorAll('.border-b-2');
 
-  button.addEventListener('click', (event) => {
-    dropdown.classList.toggle('hidden');
-    event.stopPropagation();
-  });
-
-  document.addEventListener('click', (event) => {
-    if (!dropdown.classList.contains('hidden')) {
-      dropdown.classList.add('hidden');
-    }
-  });
-
-  dropdown.addEventListener('click', (event) => {
-    event.stopPropagation();
-  });
-});
-
-// Dropdown menu for user avatar
-document.addEventListener('DOMContentLoaded', () => {
-  const button = document.getElementById('dropdownAvatarNameButton');
-  const dropdown = document.getElementById('dropdownAvatarName');
-
-  // Toggle dropdown menu visibility
-  button.addEventListener('click', () => {
-    dropdown.classList.toggle('hidden');
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', (event) => {
-    if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-      dropdown.classList.add('hidden');
-    }
-  });
-});
-
-// Show content based on tab click
-document.addEventListener('DOMContentLoaded', () => {
-  // Get all the tabs
-  const tabs = document.querySelectorAll('.border-b-2');
-
-  // Add event listener to each tab
-  tabs.forEach(tab => {
+// Add event listener to each tab
+tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Remove 'active' class from all tabs
-      tabs.forEach(t => t.classList.remove('active'));
+        // Remove 'active' class from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
 
-      // Add 'active' class to the clicked tab
-      tab.classList.add('active');
+        // Add 'active' class to the clicked tab
+        tab.classList.add('active');
     });
-  });
 });
-
-// Show content function
-function showContent(contentId) {
-  // Hide all content boxes
-  const contentBoxes = document.getElementsByClassName("content-box");
-  for (let i = 0; i < contentBoxes.length; i++) {
-    contentBoxes[i].classList.add("hidden");
-  }
-
-  // Show the selected content box
-  document.getElementById(contentId).classList.remove("hidden");
-}
-
-// Show the default content when the page loads
-showContent('home');
-
 
 
 </script>
