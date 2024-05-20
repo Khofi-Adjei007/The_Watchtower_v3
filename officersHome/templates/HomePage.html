@@ -281,7 +281,7 @@ Officer Name Here
 
 
 <!--Regular Docket Registrations Forms Here-->
-<form id="content1" class="content-box py-4 hidden" method="post" enctype="multipart/form-data">
+<form id="content1" class="content-box py-2 hidden" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="w-full mb-4 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
       <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
@@ -307,7 +307,7 @@ Officer Name Here
           <div class="">
               <div class="grid grid-flow-col p-3">
                   <!-- Radio buttons -->
-                  <button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mt-24 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                  <button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                       Statement By 
                       <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -370,25 +370,25 @@ Officer Name Here
   </div>
 
   <!-- Buttons -->
-  <button id="dropDocketBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
-      Drop Docket
-  </button>
+  <button id="resetbutton" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
+    Reset 
+</button>
 
-  <button id="previewBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
-      Preview
-  </button>
+<button id="dropDocketBtn" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
+    Drop Docket
+</button>
 
-  <button id="queueStatment" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
-      Queue Statement
-  </button>
+<button id="previewBtn" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
+    Preview
+</button>
 
-  <button id="registerDocketBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
-      Register Docket
-  </button>
+<button id="queueStatment" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
+    Queue Statement
+</button>
 
-  <button id="docketpdf" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-500 hover:bg-blue-600">
-      Generate PDF
-  </button>
+<button id="docketpdf" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-500 hover:bg-blue-600">
+    Register Docket
+</button>
 </form>
 <!--Regular Docket Registrations Forms Ends Here-->
 
@@ -600,321 +600,6 @@ Public
 
 
 </div>
-<script>
-   document.addEventListener('DOMContentLoaded', function() {
-        const queueButton = document.getElementById('queueStatment');
-        const generatePDFButton = document.getElementById('docketpdf');
-
-        queueButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            let formData = new FormData(document.getElementById('content1'));
-            fetch('{% url "queue_statement" %}', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Statement queued successfully');
-            });
-        });
-
-        generatePDFButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            fetch('{% url "generate_pdf" %}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = 'docket.pdf';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            });
-        });
-    });
-
-
-
-
-
-
-    //Pagination Functionlities
-    document.addEventListener('DOMContentLoaded', (event) => {
-  const list = document.querySelectorAll('#paginated-list li');
-  const nextButton = document.getElementById('next');
-  const prevButton = document.getElementById('prev');
-  const itemsPerPage = 5;
-  let currentPage = 1;
-
-  function showPage(page) {
-    const start = (page - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    list.forEach((item, index) => {
-      if (index >= start && index < end) {
-        item.style.display = 'block';
-      } else {
-        item.style.display = 'none';
-      }
-    });
-
-    prevButton.disabled = page === 1;
-    nextButton.disabled = end >= list.length;
-  }
-
-  nextButton.addEventListener('click', () => {
-    currentPage++;
-    showPage(currentPage);
-  });
-
-  prevButton.addEventListener('click', () => {
-    currentPage--;
-    showPage(currentPage);
-  });
-
-  // Initialize the pagination
-  showPage(currentPage);
-});
-
-
-    // Drop Docket and Preview Functions
-    document.addEventListener('DOMContentLoaded', function() {
-    const dropDocketBtn = document.getElementById('dropDocketBtn');
-    const previewBtn = document.getElementById('previewBtn');
-    const form = document.getElementById('content1');
-    const previewContainer = document.getElementById('previewContainer');
-    const pdfPreview = document.getElementById('pdfPreview');
-
-    // Event listener for Drop Docket button
-    dropDocketBtn.addEventListener('click', function() {
-        form.reset(); // Resets the form
-    });
-
-    // Event listener for Preview button
-    previewBtn.addEventListener('click', function() {
-        const formData = new FormData(form);
-
-        // Create a new jsPDF instance
-        const pdf = new jsPDF();
-
-        // Set up the content of the PDF
-        let yPosition = 10;
-        formData.forEach((value, key) => {
-            pdf.text(`${key}: ${value}`, 10, yPosition);
-            yPosition += 10;
-        });
-
-        // Generate PDF content as data URI
-        const pdfContent = pdf.output('datauristring');
-
-        // Set the PDF content to the iframe source
-        pdfPreview.src = pdfContent;
-
-        // Show the preview container
-        previewContainer.style.display = 'block';
-    });
-});
-
-
-
-
-
-    //Notification dropdown menu
-    document.addEventListener('DOMContentLoaded', (event) => {
-    const dropdownButtons = [
-      {
-        button: document.getElementById('dropdownNotificationNameButton'),
-        dropdown: document.getElementById('dropdownNotification')
-      },
-      {
-        button: document.getElementById('dropdownNotificationNameButton'),
-        dropdown: document.getElementById('dropdownNotification')
-      }
-    ];
-
-    dropdownButtons.forEach(({ button, dropdown }) => {
-      button.addEventListener('click', (event) => {
-        dropdown.classList.toggle('hidden');
-        event.stopPropagation();
-      });
-    });
-
-    document.addEventListener('click', (event) => {
-      dropdownButtons.forEach(({ dropdown }) => {
-        if (!dropdown.classList.contains('hidden')) {
-          dropdown.classList.add('hidden');
-        }
-      });
-    });
-
-    dropdownButtons.forEach(({ dropdown }) => {
-      dropdown.addEventListener('click', (event) => {
-        event.stopPropagation();
-      });
-    });
-  });
-
-
-// Acocunt dropdown menu
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('dropdownOfficerNameButton');
-    const dropdown = document.getElementById('dropdownOfficerName');
-
-    button.addEventListener('click', (event) => {
-      dropdown.classList.toggle('hidden');
-      event.stopPropagation();
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!dropdown.classList.contains('hidden')) {
-        dropdown.classList.add('hidden');
-      }
-    });
-
-    dropdown.addEventListener('click', (event) => {
-      event.stopPropagation();
-    });
-  });
-
-
-    // Get the button and dropdown menu
-    const button = document.getElementById('dropdownRadioButton');
-    const dropdownMenu = document.getElementById('dropdownDefaultRadio');
-
-    // Toggle dropdown menu visibility
-    button.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('hidden');
-    });
-
-    // Close dropdown menu when clicked outside
-    document.addEventListener('click', (event) => {
-        const target = event.target;
-        if (!button.contains(target) && !dropdownMenu.contains(target)) {
-            dropdownMenu.classList.add('hidden');
-        }
-    });
-
-    // Hide dropdown menu when an item is selected
-    const radioInputs = dropdownMenu.querySelectorAll('input[type="radio"]');
-    radioInputs.forEach(input => {
-        input.addEventListener('change', () => {
-            dropdownMenu.classList.add('hidden');
-        });
-    });
-
-
-
-//////////////////////////
-
-
-
-
-  // Get the container element
-  const clickedItem = document.getElementById('clicked_item');
-
-    // Get all nav bar elements
-    const navBars = document.querySelectorAll('li');
-
-// Add click event listener to each nav bar
-navBars.forEach(navBar => {
-    navBar.addEventListener('click', () => {
-        // Get the text content of the clicked nav bar
-        const navBarName = navBar.textContent.trim();
-
-        // Update the content of the clicked_item container
-        clickedItem.querySelector('strong').textContent = navBarName;
-    });
-});
-
-
-
- function showContent(contentId) {
-      // Hide all content boxes
-      var contentBoxes = document.getElementsByClassName("content-box");
-      for (var i = 0; i < contentBoxes.length; i++) {
-          contentBoxes[i].classList.add("hidden");
-      }
-
-      // Show the selected content box
-      document.getElementById(contentId).classList.remove("hidden");
-  }
-
-  // Show the default content when the page loads
-  showContent('home');
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const button = document.getElementById('dropdownNotificationButton');
-    const dropdown = document.getElementById('dropdownNotification');})
-
-// Dropdown menu for user avatar
-document.addEventListener('DOMContentLoaded', function () {
-    const button = document.getElementById('dropdownAvatarNameButton');
-    const dropdown = document.getElementById('dropdownAvatarName');
-
-    // Toggle dropdown menu visibility
-    button.addEventListener('click', function () {
-      dropdown.classList.toggle('hidden');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.add('hidden');
-      }
-    });
-  });
-
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const button = document.getElementById('dropdownNotificationButton');
-    const dropdown = document.getElementById('dropdownNotification');
-
-    // Toggle dropdown menu visibility
-    button.addEventListener('click', function () {
-      const buttonRect = button.getBoundingClientRect();
-      dropdown.style.top = `${buttonRect.bottom}px`;
-      dropdown.style.left = `${buttonRect.left}px`;
-      dropdown.classList.toggle('hidden');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.add('hidden');
-      }
-    });
-  });
-
-            // Get all the tabs
-const tabs = document.querySelectorAll('.border-b-2');
-
-// Add event listener to each tab
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        // Remove 'active' class from all tabs
-        tabs.forEach(t => t.classList.remove('active'));
-
-        // Add 'active' class to the clicked tab
-        tab.classList.add('active');
-    });
-});
-
-
-</script>
+<script src="{% static 'staticfiles/admin/js/functionalities.js' %}"></script>
 </body>
 </html>

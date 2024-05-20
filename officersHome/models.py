@@ -223,9 +223,6 @@ class Witness(Target):
     relationship_to_witness = models.CharField(max_length=100)
 
 
-
-
-
 class Statement(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     statement_type = models.CharField(max_length=50)
@@ -235,3 +232,11 @@ class Statement(models.Model):
     def __str__(self):
         return f"{self.statement_type} - {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
 
+
+class PDFDocument(models.Model):
+    title = models.CharField(max_length=200)
+    file = models.FileField(upload_to='pdfs/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

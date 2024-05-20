@@ -18,21 +18,22 @@ from django.contrib.auth.hashers import make_password, check_password
 import json
 from io import BytesIO
 from django.shortcuts import render, redirect
-from .models import Statement
 from reportlab.pdfgen import canvas
 from django.core.mail import send_mail
 from django.conf import settings
 import os
 from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from django.conf import settings
-import os
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
+from django.contrib.sessions.models import Session
+from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
+from django.core.files.base import ContentFile
+from .models import Statement, PDFDocument
+
+
+
 
 
 
@@ -135,51 +136,112 @@ def full_casebox_details(request):
 @csrf_exempt
 def queue_statement(request):
     if request.method == 'POST':
-        statement = request.POST.get('statement')
-        radio_value = request.POST.get('default-radio')
+        statement_type = request.POST.get('default-radio')
+        content = request.POST.get('statement')
         
-        # Collect other form fields as needed
-        # ...
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.create()
+            session_key = request.session.session_key
+        
+        session = Session.objects.get(session_key=session_key)
+        
+        # Check if statement of the same type already exists
+        if Statement.objects.filter(session=session, statement_type=statement_type).exists():
+            return JsonResponse({'status': 'error', 'message': 'A statement of this type already exists'})
 
-        if 'statements' not in request.session:
-            request.session['statements'] = []
+        Statement.objects.create(session=session, statement_type=statement_type, content=content)
+        return JsonResponse({'status': 'success', 'message': 'Statement queued successfully'})
 
-        request.session['statements'].append({
-            'statement': statement,
-            'radio_value': radio_value,
-            # Include other form fields
-        })
-        request.session.modified = True
+@csrf_exempt
+def drop_docket(request):
+    session_key = request.session.session_key
+    if session_key:
+        session = Session.objects.get(session_key=session_key)
+        Statement.objects.filter(session=session).delete()
+    return JsonResponse({'status': 'success', 'message': 'Docket dropped successfully'})
 
-        return JsonResponse({'status': 'success'})
+
+
+@csrf_exempt
+def preview_pdf(request):
+    session_key = request.session.session_key
+    if not session_key:
+        return HttpResponse("No statements queued", status=400)
+    
+    session = Session.objects.get(session_key=session_key)
+    statements = Statement.objects.filter(session=session)
+
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)
+    
+    p.drawString(100, 800, "Docket Report - Preview")
+    
+    y = 750
+    for statement in statements:
+        p.drawString(100, y, f"{statement.statement_type} - {statement.created_at.strftime('%Y-%m-%d %H:%M:%S')}")
+        y -= 15
+        text = p.beginText(100, y)
+        text.textLines(statement.content)
+        p.drawText(text)
+        y -= len(statement.content.split('\n')) * 15 + 20
+    
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    pdf_content = buffer.getvalue()
+
+    # Render HTML content for preview
+    html_content = render_to_string('preview_template.html', {'pdf_content': pdf_content})
+    
+    return JsonResponse({'html': html_content})
+
+
+def save_pdf(request):
+    if request.method == 'POST':
+        # handle saving the PDF
+        return HttpResponse('PDF saved successfully')
+    return HttpResponse(status=405)
 
 
 
 @csrf_exempt
 def generate_pdf(request):
-    if request.method == 'POST':
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
+    session_key = request.session.session_key
+    if not session_key:
+        return HttpResponse("No statements queued", status=400)
+    
+    session = Session.objects.get(session_key=session_key)
+    statements = Statement.objects.filter(session=session)
 
-        buffer = BytesIO()
-        p = canvas.Canvas(buffer, pagesize=letter)
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)
+    
+    p.drawString(100, 800, "Docket Report")
+    
+    y = 750
+    for statement in statements:
+        p.drawString(100, y, f"{statement.statement_type} - {statement.created_at.strftime('%Y-%m-%d %H:%M:%S')}")
+        y -= 15
+        text = p.beginText(100, y)
+        text.textLines(statement.content)
+        p.drawText(text)
+        y -= len(statement.content.split('\n')) * 15 + 20
+    
+    p.showPage()
+    p.save()
 
-        statements = request.session.get('statements', [])
-        y = 750
+    buffer.seek(0)
+    pdf_content = buffer.getvalue()
 
-        for i, statement_data in enumerate(statements):
-            p.drawString(100, y, f"Statement {i+1}: {statement_data['radio_value']}")
-            y -= 15
-            p.drawString(100, y, statement_data['statement'])
-            y -= 30
+    # Save PDF to the database
+    pdf_document = PDFDocument()
+    pdf_document.file.save('docket.pdf', ContentFile(pdf_content))
 
-        p.showPage()
-        p.save()
-
-        buffer.seek(0)
-        response.write(buffer.getvalue())
-
-        # Clear session after generating PDF
-        request.session.pop('statements', None)
-
-        return response
+    # Return the PDF as a response
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
+    
+    Statement.objects.filter(session=session).delete()
+    return response
