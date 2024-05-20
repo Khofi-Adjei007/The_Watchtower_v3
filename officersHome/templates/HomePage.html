@@ -281,158 +281,114 @@ Officer Name Here
 
 
 <!--Regular Docket Registrations Forms Here-->
-<div class="container mx-auto">
-  <form id="content1" class="content-box py-4 hidden p-6 rounded-lg shadow-lg">
-      {% csrf_token %}
-      {{ form.as_p }}
+<form id="content1" class="content-box py-4 hidden" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="w-full mb-4 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+      <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
+          <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
+              <div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+                  <!-- Add media file input -->
+                  {{ form.media_files }}
 
-      <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
-          Queue Case Statement
-      </button>
-  </form>
+                  <!-- Other buttons -->
+                  <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
+                          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
+                      </svg>
+                      <span class="sr-only">Attach file</span>
+                  </button>
+                  <!-- Other buttons omitted for brevity -->
+              </div>
+              <!-- Other buttons omitted for brevity -->
+          </div>
+      </div>
 
-  <form method="post" action="{% url 'register_docket' %}">
-      {% csrf_token %}
-      <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600 mt-4">
-          Register Docket
-      </button>
-  </form>
-</div>
+      <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+          <div class="">
+              <div class="grid grid-flow-col p-3">
+                  <!-- Radio buttons -->
+                  <button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mt-24 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                      Statement By 
+                      <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                      </svg>
+                  </button>
+                  <div id="dropdownDefaultRadio" class="z-10 hidden absolute bg-white mt-12 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+                      <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                          <li>
+                              <div class="flex items-center">
+                                  <input id="default-radio-1" type="radio" value="Case Statement" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Case Statement</label>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="flex items-center">
+                                  <input id="default-radio-2" type="radio" value="Victim" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim</label>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="flex items-center">
+                                  <input id="default-radio-3" type="radio" value="Victim Witness" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim Witness</label>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="flex items-center">
+                                  <input id="default-radio-4" type="radio" value="Suspect" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="default-radio-4" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect</label>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="flex items-center">
+                                  <input id="default-radio-5" type="radio" value="Suspect Witness" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="default-radio-5" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect Witness</label>
+                              </div>
+                          </li>
+                          <li>
+                              <div class="flex items-center">
+                                  <input id="default-radio-6" type="radio" value="Other" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                  <label for="default-radio-6" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Other</label>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
 
+          <!-- Text input fields -->
+          <div class="grid p-2">
+              {% for field in form %}
+                  <!-- Render visible fields -->
+                  <input type="text" id="{{ field.id_for_label }}" name="{{ field.name }}" class="bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ field.label }}" {% if field.field.required %}required{% endif %} />
+              {% endfor %}
+          </div>
+          
+          <!-- Textarea for statement -->
+          <textarea id="statement" name="statement" rows="8" class="block mt-3 w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Start Writing Occurrence..." required></textarea>
+      </div>
+  </div>
 
-<form id="content1" class="content-box py-4 hidden">
-{% csrf_token %}
-<div class="w-full mb-4 border border-gray-200  bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-<div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
-<div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
-<div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+  <!-- Buttons -->
+  <button id="dropDocketBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
+      Drop Docket
+  </button>
 
-<button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-<svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
-<path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
-</svg>
-<span class="sr-only">Attach file</span>
-</button>
+  <button id="previewBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
+      Preview
+  </button>
 
-<button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-<svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-<path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-</svg>
-<span class="sr-only">Embed map</span>
-</button>
+  <button id="queueStatment" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
+      Queue Statement
+  </button>
 
-<button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-<svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-<path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"/>
-<path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"/>
-</svg>
-<span class="sr-only">Upload image</span>
-</button>
+  <button id="registerDocketBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
+      Register Docket
+  </button>
 
-<button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-<svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-<path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>
-<path d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z"/>
-</svg>
-<span class="sr-only">Format code</span>
-</button>
-</div>
-
-<div class="flex flex-wrap items-center space-x-1 rtl:space-x-reverse sm:ps-4">
-<button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-<svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-<path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z"/>
-<path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z"/>
-</svg>
-<span class="sr-only">Timeline</span>
-</button>
-</div>
-</div>
-</div>
-
-
-
-<div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
-<div class="">
-<div class="grid grid-flow-col p-3">
-   
-
-<!-- Button to toggle dropdown -->
-<button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Statement By <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>
-</button>
-
-
-<!-- Dropdown menu -->
-<div id="dropdownDefaultRadio" class="z-10 hidden absolute bg-white mt-12 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
-<ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
-<li>
-<div class="flex items-center">
-<input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Case Statement</label>
-</div>
-</li>
-<li>
-<div class="flex items-center">
-<input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim</label>
-</div>
-</li>
-<li>
-<div class="flex items-center">
-<input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim Witness</label>
-</div>
-</li>
-<li>
-<div class="flex items-center">
-<input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect</label>
-</div>
-</li>
-<li>
-<div class="flex items-center">
-<input id="default-radio-3" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect Witness</label>
-</div>
-</li>
-</ul>
-</div>
-
-
-
-
-<div class="flex p-2">
-<input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required />
-<input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Residential Address" required />
-<input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Contact" required />
-<input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Date of Birth" required />
-<input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Hometown" required />
-<input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Gender" required />
-</div>
-
-</div>
-</div>
-<label for="editor" class="sr-only">Publish post</label>
-<textarea id="editor" rows="8" class="block mt-3 w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Start Writing Occurence..." required ></textarea>
-</div>
-</div>
-
-
-<button id="dropDocketBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
-Drop Docket
-</button>
-
-<button id="previewBtn" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
-Preview
-</button>
-
-<button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
-  Que Case Statement
-</button>
-
-<button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
-Register Docket
-</button>
+  <button id="docketpdf" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-500 hover:bg-blue-600">
+      Generate PDF
+  </button>
 </form>
 <!--Regular Docket Registrations Forms Ends Here-->
 
@@ -645,6 +601,53 @@ Public
 
 </div>
 <script>
+   document.addEventListener('DOMContentLoaded', function() {
+        const queueButton = document.getElementById('queueStatment');
+        const generatePDFButton = document.getElementById('docketpdf');
+
+        queueButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            let formData = new FormData(document.getElementById('content1'));
+            fetch('{% url "queue_statement" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Statement queued successfully');
+            });
+        });
+
+        generatePDFButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            fetch('{% url "generate_pdf" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'docket.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+        });
+    });
+
+
+
+
+
+
     //Pagination Functionlities
     document.addEventListener('DOMContentLoaded', (event) => {
   const list = document.querySelectorAll('#paginated-list li');

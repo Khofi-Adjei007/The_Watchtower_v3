@@ -9,6 +9,6 @@ urlpatterns = [
     path('officer_registrations/', views.officer_registrations, name='officer_registrations'),
     path('officer_login/', views.officer_login, name='officer_login'),
     path('officer_logout/', views.officer_logout, name='officer_logout'),
-    path('', views.index, name='index'),
-    path('register_docket/', views.register_docket, name='register_docket')
+    path('queue_statement/', views.queue_statement, name='queue_statement'),
+    path('generate_pdf/', views.generate_pdf, name='generate_pdf'),
 ]

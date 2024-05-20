@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
-
+from django.contrib.sessions.models import Session
 
 # Create your models here.
 class OfficerLogin(models.Model):
@@ -224,32 +224,14 @@ class Witness(Target):
 
 
 
-#Dockets and handlings
-class Statements(models.Model):
-    CATEGORY_CHOICES = [
-        ('case', 'Case Statement'),
-        ('victim', 'Victim'),
-        ('victim_witness', 'Victim Witness'),
-        ('suspect', 'Suspect'),
-        ('suspect_witness', 'Suspect Witness'),
-    ]
-    
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=200)
-    contact = models.CharField(max_length=15)
-    date_of_birth = models.DateField()
-    hometown = models.CharField(max_length=100)
-    gender = models.CharField(max_length=10)
+
+
+class Statement(models.Model):
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    statement_type = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.get_category_display()} - {self.name}"
+        return f"{self.statement_type} - {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
 
-class Docket(models.Model):
-    statements = models.ManyToManyField(Statements)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Docket created on {self.created_at}"

@@ -18,14 +18,21 @@ from django.contrib.auth.hashers import make_password, check_password
 import json
 from io import BytesIO
 from django.shortcuts import render, redirect
-from .docketStatementForms import StatementForm
-from .models import Statements, Docket
+from .models import Statement
 from reportlab.pdfgen import canvas
 from django.core.mail import send_mail
 from django.conf import settings
 import os
-
-
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from django.conf import settings
+import os
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 
 
@@ -125,28 +132,54 @@ def full_casebox_details(request):
 
 ###################################################################################
 #Docket Process Views Starts Here
-def index(request):
+@csrf_exempt
+def queue_statement(request):
     if request.method == 'POST':
-        form = StatementForm(request.POST)
-        if form.is_valid():
-            statement = form.save()
-            # Handle statement queuing logic (store in session or similar)
-            queued_statements = request.session.get('queued_statements', [])
-            queued_statements.append(statement.id)
-            request.session['queued_statements'] = queued_statements
-            form = StatementForm()  # Reset the form for the next input
-    else:
-        form = StatementForm()
-    return render(request, 'HomePage.html', {'form': form})
+        statement = request.POST.get('statement')
+        radio_value = request.POST.get('default-radio')
+        
+        # Collect other form fields as needed
+        # ...
+
+        if 'statements' not in request.session:
+            request.session['statements'] = []
+
+        request.session['statements'].append({
+            'statement': statement,
+            'radio_value': radio_value,
+            # Include other form fields
+        })
+        request.session.modified = True
+
+        return JsonResponse({'status': 'success'})
 
 
-def register_docket(request):
-    queued_statements = request.session.get('queued_statements', [])
-    if queued_statements:
-        statements = Statements.objects.filter(id__in=queued_statements)
-        docket = Docket.objects.create()
-        docket.statements.set(statements)
-        docket.save()
-        request.session['queued_statements'] = []  # Clear the session queue
-    return redirect(reverse('HomePage'))
 
+@csrf_exempt
+def generate_pdf(request):
+    if request.method == 'POST':
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
+
+        buffer = BytesIO()
+        p = canvas.Canvas(buffer, pagesize=letter)
+
+        statements = request.session.get('statements', [])
+        y = 750
+
+        for i, statement_data in enumerate(statements):
+            p.drawString(100, y, f"Statement {i+1}: {statement_data['radio_value']}")
+            y -= 15
+            p.drawString(100, y, statement_data['statement'])
+            y -= 30
+
+        p.showPage()
+        p.save()
+
+        buffer.seek(0)
+        response.write(buffer.getvalue())
+
+        # Clear session after generating PDF
+        request.session.pop('statements', None)
+
+        return response
