@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 
 from pathlib import Path
+import os
 
 # Define the base directory of your project
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,12 +30,8 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 
 
-# Define the base directory where media files will be stored
-MEDIA_ROOT = BASE_DIR / 'profileImages'
-
-# URL that serves media files during development
 MEDIA_URL = '/media/'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!

@@ -13,5 +13,8 @@ urlpatterns = [
     path('drop_docket/', views.drop_docket, name='drop_docket'),
     path('preview_pdf/', views.preview_pdf, name='preview_pdf'),
     path('generate_pdf/', views.generate_pdf, name='generate_pdf'),
-    path('save_pdf/', views.save_pdf, name='save_pdf'),
+    #path('save_pdf/', views.save_pdf, name='save_pdf'),
+    path('profile_view/', views.profile_view, name='profile_view'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

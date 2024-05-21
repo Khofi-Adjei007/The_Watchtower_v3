@@ -128,6 +128,12 @@ def officer_logout(request):
 def full_casebox_details(request):
     return render(request, 'Casebox.html')
 
+def profile_view(request):
+    context = {}
+    if request.user.is_authenticated:
+        if hasattr(request.user, 'newofficerregistration'):
+            context['officer_profile_image_url'] = request.user.newofficerregistration.officer_profile_image.url if request.user.newofficerregistration.officer_profile_image else None
+    return render(request, 'profile.html', context)
 
 
 
@@ -196,15 +202,6 @@ def preview_pdf(request):
     html_content = render_to_string('preview_template.html', {'pdf_content': pdf_content})
     
     return JsonResponse({'html': html_content})
-
-
-def save_pdf(request):
-    if request.method == 'POST':
-        # handle saving the PDF
-        return HttpResponse('PDF saved successfully')
-    return HttpResponse(status=405)
-
-
 
 @csrf_exempt
 def generate_pdf(request):
