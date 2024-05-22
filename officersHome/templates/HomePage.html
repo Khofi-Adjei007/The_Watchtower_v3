@@ -281,112 +281,125 @@ Officer Name Here
 
 <!--Regular Docket Registrations Forms Here-->
 <form id="content1" class="content-box py-2 hidden" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="w-full mb-4 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-      <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
-          <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
-              <div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                  <!-- Add media file input -->
-                  {{ form.media_files }}
+{% csrf_token %}
+<div class="w-full mb-4 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+<div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
+<div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
+<div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+<!-- Add media file input -->
+{{ form.media_files }}
 
-                  <!-- Other buttons -->
-                  <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
-                          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
-                      </svg>
-                      <span class="sr-only">Attach file</span>
-                  </button>
-                  <!-- Other buttons omitted for brevity -->
-              </div>
-              <!-- Other buttons omitted for brevity -->
-          </div>
-      </div>
+<!-- Other buttons -->
+<button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+<svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
+<path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
+</svg>
+<span class="sr-only">Attach file</span>
+</button>
+<!-- Other buttons omitted for brevity -->
+</div>
+<!-- Other buttons omitted for brevity -->
+</div>
+</div>
 
-      <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
-          <div class="">
-              <div class="grid grid-flow-col p-3">
-                  <!-- Radio buttons -->
-                  <button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                      Statement By 
-                      <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                      </svg>
-                  </button>
-                  <div id="dropdownDefaultRadio" class="z-10 hidden absolute bg-white mt-12 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
-                      <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
-                          <li>
-                              <div class="flex items-center">
-                                  <input id="default-radio-1" type="radio" value="Case Statement" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                  <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Case Statement</label>
-                              </div>
-                          </li>
-                          <li>
-                              <div class="flex items-center">
-                                  <input id="default-radio-2" type="radio" value="Victim" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                  <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim</label>
-                              </div>
-                          </li>
-                          <li>
-                              <div class="flex items-center">
-                                  <input id="default-radio-3" type="radio" value="Victim Witness" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                  <label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim Witness</label>
-                              </div>
-                          </li>
-                          <li>
-                              <div class="flex items-center">
-                                  <input id="default-radio-4" type="radio" value="Suspect" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                  <label for="default-radio-4" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect</label>
-                              </div>
-                          </li>
-                          <li>
-                              <div class="flex items-center">
-                                  <input id="default-radio-5" type="radio" value="Suspect Witness" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                  <label for="default-radio-5" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect Witness</label>
-                              </div>
-                          </li>
-                          <li>
-                              <div class="flex items-center">
-                                  <input id="default-radio-6" type="radio" value="Other" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                  <label for="default-radio-6" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Other</label>
-                              </div>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
+<div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+<div class="">
+<div class="grid grid-flow-col p-3">
 
-          <!-- Text input fields -->
-          <div class="grid p-2">
-              {% for field in form %}
-                  <!-- Render visible fields -->
-                  <input type="text" id="{{ field.id_for_label }}" name="{{ field.name }}" class="bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ field.label }}" {% if field.field.required %}required{% endif %} />
-              {% endfor %}
-          </div>
-          
-          <!-- Textarea for statement -->
-          <textarea id="statement" name="statement" rows="8" class="block mt-3 w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Start Writing Occurrence..." required></textarea>
-      </div>
-  </div>
 
-  <!-- Buttons -->
-  <button id="resetbutton" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
-    Reset 
+<!-- Radio buttons -->
+<button id="dropdownRadioButton" data-dropdown-toggle="dropdownDefaultRadio" class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+Statement By 
+<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+</svg>
 </button>
 
-<button id="dropDocketBtn" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
+<!-- Dropdowns -->
+<div id="dropdownDefaultRadio" class="z-10 hidden absolute bg-white mt-12 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+<ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+    
+<li>
+<div class="flex items-center">
+<input id="default-radio-1" type="radio" value="Case Statement" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Case Statement</label>
+</div>
+</li>
+
+<li>
+<div class="flex items-center">
+<input id="default-radio-2" type="radio" value="Victim" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim</label>
+</div>
+</li>
+
+<li>
+<div class="flex items-center">
+<input id="default-radio-3" type="radio" value="Victim Witness" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Victim Witness</label>
+</div>
+</li>
+
+<li>
+<div class="flex items-center">
+<input id="default-radio-4" type="radio" value="Suspect" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-4" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect</label>
+</div>
+</li>
+
+<li>
+<div class="flex items-center">
+<input id="default-radio-5" type="radio" value="Suspect Witness" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-5" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Suspect Witness</label>
+</div>
+</li>
+
+<li>
+<div class="flex items-center">
+<input id="default-radio-6" type="radio" value="Other" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+<label for="default-radio-6" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Other</label>
+</div>
+</li>
+
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Text input fields -->
+<div class="grid p-2">
+{% for field in form %}
+<!-- Render visible fields -->
+<input type="text" id="{{ field.id_for_label }}" name="{{ field.name }}" class="bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ field.label }}" {% if field.field.required %}required{% endif %} />
+{% endfor %}
+</div>
+
+<!-- Textarea for statement -->
+<textarea id="statement" name="statement" rows="8" class="block mt-3 w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Start Writing Occurrence..." required></textarea>
+</div>
+</div>
+
+<!-- Buttons with correctly embedded URLs -->
+<button id="resetbutton" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
+Reset
+</button>
+
+<button id="queueStatment" data-url-queue-statement="{% url 'queue_statement' %}" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
+Queue Statement
+</button>
+
+<button id="dropDocketBtn" data-url-check-session="{% url 'check_session' %}" data-url-clear-session="{% url 'clear_session' %}" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-red-600 hover:bg-red-600">
     Drop Docket
 </button>
 
-<button id="previewBtn" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
-    Preview
+<button id="previewBtn" data-url-preview-pdf="{% url 'preview_pdf' %}" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-yellow-600 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-yellow-500 hover:bg-yellow-400">
+Preview
 </button>
 
-<button id="queueStatment" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-green-700 rounded-lg focus:ring-4 focus:ring-green-600 dark:focus:ring-green-500 hover:bg-green-400">
-    Queue Statement
-</button>
 
-<button id="docketpdf" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-500 hover:bg-blue-600">
-    Register Docket
+
+<button id="docketpdf" data-url-generate-pdf="{% url 'generate_pdf' %}" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-500 hover:bg-blue-600">
+Register Docket
 </button>
 </form>
 <!--Regular Docket Registrations Forms Ends Here-->

@@ -1,149 +1,252 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const resetButton = document.getElementById('resetbutton');
-    const dropDocketButton = document.getElementById('dropDocketBtn');
-    const previewButton = document.getElementById('previewBtn');
-    const queueButton = document.getElementById('queueStatment');
-    const generatePDFButton = document.getElementById('docketpdf');
 
-    resetButton.addEventListener('click', function() {
-        document.getElementById('content1').reset();
-    });
 
-    dropDocketButton.addEventListener('click', function() {
-        fetch('{% url "drop_docket" %}', {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert('Docket dropped successfully');
-            location.reload();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while dropping the docket.');
-        });
-    });
+document.getElementById('resetbutton').addEventListener('click', function() {
+  const form = document.getElementById('content1');
 
-    previewButton.addEventListener('click', function() {
-        let formData = new FormData(document.getElementById('content1'));
-        fetch('{% url "preview_pdf" %}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const modal = document.createElement('div');
-            modal.id = 'previewModal';
-            modal.innerHTML = `
-                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;">
-                    <div style="background: white; padding: 20px; position: relative;">
-                        <button id="closeModal" style="position: absolute; top: 10px; right: 10px;">&times;</button>
-                        <embed src="data:application/pdf;base64,${data.pdf_content}" width="600" height="500" type="application/pdf">
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal);
+  // Collect all input fields
+  const inputs = form.querySelectorAll('input[type="text"], input[type="radio"], textarea');
+  
+  // Collect data from the form fields
+  const formData = {};
+  inputs.forEach(input => {
+      if (input.type === 'radio') {
+          if (input.checked) {
+              formData[input.name] = input.value;
+          }
+      } else {
+          formData[input.name] = input.value;
+      }
+  });
 
-            document.getElementById('closeModal').addEventListener('click', function() {
-                document.body.removeChild(modal);
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while generating the preview.');
-        });
-    });
+  // Reset the form fields to their default values
+  form.reset();
+  alert('Form has been reset!');
 
-    queueButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        let formData = new FormData(document.getElementById('content1'));
-        fetch('{% url "queue_statement" %}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'error') {
-                alert(data.message);
-                resetButton.click();
-            } else {
-                alert('Statement queued successfully');
-                document.getElementById('content1').reset();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Empty: Cannot Que Empty Session');
-        });
-    });
+  // You can use formData for any further processing if needed
+  console.log(formData);
+});
 
-    generatePDFButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        let formData = new FormData(document.getElementById('content1'));
-        fetch('{% url "generate_pdf" %}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        })
-        .then(response => response.blob())
-        .then(blob => {
-            // Convert blob to URL
-            const url = window.URL.createObjectURL(blob);
-            
-            // Save PDF to database (if needed) and download it
-                    fetch('{% url "save_pdf" %}', {
-                method: 'POST',
-                body: blob,
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/pdf'
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('There was a problem with your fetch operation:', error);
-            });
 
-            // Download PDF
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'docket.pdf';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.getElementById('content1').reset();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while generating the PDF.');
-        });
+document.getElementById('queueStatment').addEventListener('click', function() {
+  const form = document.getElementById('content1');
+  const url = this.getAttribute('data-url-queue-statement');
+  
+  // Collect all input fields
+  const inputs = form.querySelectorAll('input[type="text"], input[type="radio"], textarea');
+  
+  // Check if any input fields are empty
+  for (const input of inputs) {
+      if (input.type === 'radio') {
+          // Check if at least one radio button is selected
+          const radioGroup = form.querySelectorAll(`input[name="${input.name}"]`);
+          const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+          if (!isChecked) {
+              alert('All fields must be filled out, including selecting a radio button.');
+              return; // Break the process if any field is empty
+          }
+      } else if (!input.value.trim()) {
+          alert('All fields must be filled out.');
+          return; // Break the process if any field is empty
+      }
+  }
+
+  // Collect data from the form fields
+  const formData = {};
+  inputs.forEach(input => {
+      if (input.type === 'radio') {
+          if (input.checked) {
+              formData[input.name] = input.value;
+          }
+      } else {
+          formData[input.name] = input.value;
+      }
+  });
+
+  // Send data to the server via AJAX
+  fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+      },
+      body: JSON.stringify(formData),
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.success) {
+          // Reset the form
+          form.reset();
+
+          // Alert the user of a successful queue
+          alert('Statement queued successfully. Please proceed with the next option.');
+
+          // Disable the selected radio button
+          inputs.forEach(input => {
+              if (input.type === 'radio' && input.value === formData['default-radio']) {
+                  input.disabled = true;
+              }
+          });
+      } else {
+          alert('An error occurred while queuing the statement. Please try again.');
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred while queuing the statement. Please try again.');
+  });
+});
+
+
+//Drop Docket Functionality
+document.getElementById('dropDocketBtn').addEventListener('click', function() {
+  const checkSessionUrl = this.getAttribute('data-url-check-session');
+  const clearSessionUrl = this.getAttribute('data-url-clear-session');
+
+  // Check if the session is populated
+  fetch(checkSessionUrl, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+      },
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.session_populated) {
+          // Session is populated, proceed to clear it
+          fetch(clearSessionUrl, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+              },
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // Reset the form and re-enable all radio buttons
+                  const form = document.getElementById('content1');
+                  form.reset();
+
+                  // Re-enable all radio buttons
+                  const radioButtons = form.querySelectorAll('input[type="radio"]');
+                  radioButtons.forEach(radio => {
+                      radio.disabled = false;
+                  });
+
+                  // Alert the user
+                  alert('All session items have been cleared.');
+              } else {
+                  alert('An error occurred while clearing the session. Please try again.');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('An unexpected error occurred while clearing the session. Please try again.');
+          });
+      } else {
+          // Session is already empty
+          alert('The session is already empty. Please start a new docket.');
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('An unexpected error occurred while checking the session. Please try again.');
+  });
+});
+
+
+//Button to preview the PDF
+document.getElementById('previewBtn').addEventListener('click', function() {
+    const previewUrl = this.getAttribute('data-url-preview-pdf');
+
+    // Fetch session data
+    fetch(previewUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Check if the docket is empty
+        if (Object.keys(data).length === 0) {
+            alert('Your docket is empty. Please queue some statements first.');
+        } else {
+            // Format session data as A4 sheet
+            const formattedData = formatAsA4Sheet(data);
+
+            // Display formatted data as modal
+            displayModal(formattedData);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred while previewing the PDF. Please try again.');
     });
 });
+
+// Function to format data as A4 sheet
+function formatAsA4Sheet(data) {
+    // Your formatting logic here
+    let formattedData = '<div class="preview-content">';
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            formattedData += `<div class="section">${key}</div>`;
+            formattedData += `<div class="data">${data[key]}</div>`;
+        }
+    }
+    formattedData += '</div>';
+    return formattedData;
+}
+
+// Function to display data as modal
+function displayModal(formattedData) {
+    // Create modal element
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            ${formattedData}
+        </div>
+    `;
+    
+    // Append modal to body
+    document.body.appendChild(modal);
+
+    // Close modal when close button is clicked
+    modal.querySelector('.close').addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.removeChild(modal);
+    });
+
+    // Close modal when any part of the screen except the modal panel is clicked
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.removeChild(modal);
+        }
+    });
+
+    // Display modal
+    modal.style.display = 'block';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

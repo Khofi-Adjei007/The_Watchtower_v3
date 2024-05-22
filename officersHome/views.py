@@ -138,73 +138,64 @@ def profile_view(request):
 
 
 ###################################################################################
-#Docket Process Views Starts Here
 @csrf_exempt
 def queue_statement(request):
     if request.method == 'POST':
-        statement_type = request.POST.get('default-radio')
-        content = request.POST.get('statement')
-        
-        session_key = request.session.session_key
-        if not session_key:
-            request.session.create()
-            session_key = request.session.session_key
-        
-        session = Session.objects.get(session_key=session_key)
-        
-        # Check if statement of the same type already exists
-        if Statement.objects.filter(session=session, statement_type=statement_type).exists():
-            return JsonResponse({'status': 'error', 'message': 'A statement of this type already exists'})
+        data = json.loads(request.body)
+        # Store data in session
+        request.session['queued_statements'] = request.session.get('queued_statements', [])
+        request.session['queued_statements'].append(data)
+        request.session.modified = True
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
 
-        Statement.objects.create(session=session, statement_type=statement_type, content=content)
-        return JsonResponse({'status': 'success', 'message': 'Statement queued successfully'})
+
 
 @csrf_exempt
-def drop_docket(request):
-    session_key = request.session.session_key
-    if session_key:
-        session = Session.objects.get(session_key=session_key)
-        Statement.objects.filter(session=session).delete()
-    return JsonResponse({'status': 'success', 'message': 'Docket dropped successfully'})
+def check_session(request):
+    # Check if session data exists
+    session_populated = 'queued_statements' in request.session and bool(request.session['queued_statements'])
 
+    # Return a JSON response indicating the session state
+    return JsonResponse({'session_populated': session_populated})
+
+
+@csrf_exempt
+def clear_session(request):
+    if request.method == 'POST':
+        # Clear specific session data
+        if 'queued_statements' in request.session:
+            del request.session['queued_statements']
+        # Return a JSON response indicating success
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
 
 
 @csrf_exempt
 def preview_pdf(request):
-    session_key = request.session.session_key
-    if not session_key:
-        return HttpResponse("No statements queued", status=400)
-    
-    session = Session.objects.get(session_key=session_key)
-    statements = Statement.objects.filter(session=session)
+    # Retrieve queued statements from session
+    queued_statements = request.session.get('queued_statements', [])
 
-    buffer = BytesIO()
-    p = canvas.Canvas(buffer)
-    
-    p.drawString(100, 800, "Docket Report - Preview")
-    
-    y = 750
-    for statement in statements:
-        p.drawString(100, y, f"{statement.statement_type} - {statement.created_at.strftime('%Y-%m-%d %H:%M:%S')}")
-        y -= 15
-        text = p.beginText(100, y)
-        text.textLines(statement.content)
-        p.drawText(text)
-        y -= len(statement.content.split('\n')) * 15 + 20
-    
-    p.showPage()
-    p.save()
+    # Check if queued statements exist
+    if isinstance(queued_statements, list) and queued_statements:
+        # Format queued statements
+        formatted_statements = {}
+        for index, statement_content in enumerate(queued_statements):
+            formatted_statements[str(index)] = {
+                'content': statement_content
+            }
 
-    buffer.seek(0)
-    pdf_content = buffer.getvalue()
+        # Return formatted statements as JSON response
+        return JsonResponse(formatted_statements)
+    else:
+        # If no queued statements exist, return an empty dictionary as JSON response
+        return JsonResponse({})
 
-    # Render HTML content for preview
-    html_content = render_to_string('preview_template.html', {'pdf_content': pdf_content})
-    
-    return JsonResponse({'html': html_content})
+
 
 @csrf_exempt
 def generate_pdf(request):
+    print("generate_pdf view called")  # Debugging statement
     session_key = request.session.session_key
     if not session_key:
         return HttpResponse("No statements queued", status=400)
@@ -232,11 +223,9 @@ def generate_pdf(request):
     buffer.seek(0)
     pdf_content = buffer.getvalue()
 
-    # Save PDF to the database
     pdf_document = PDFDocument()
     pdf_document.file.save('docket.pdf', ContentFile(pdf_content))
 
-    # Return the PDF as a response
     response = HttpResponse(buffer, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
     
