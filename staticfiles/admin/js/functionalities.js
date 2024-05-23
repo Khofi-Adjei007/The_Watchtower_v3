@@ -158,81 +158,159 @@ document.getElementById('dropDocketBtn').addEventListener('click', function() {
 
 //Button to preview the PDF
 document.getElementById('previewBtn').addEventListener('click', function() {
-    const previewUrl = this.getAttribute('data-url-preview-pdf');
+  const previewUrl = this.getAttribute('data-url-preview-pdf');
 
-    // Fetch session data
-    fetch(previewUrl, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Check if the docket is empty
-        if (Object.keys(data).length === 0) {
-            alert('Your docket is empty. Please queue some statements first.');
-        } else {
-            // Format session data as A4 sheet
-            const formattedData = formatAsA4Sheet(data);
-
-            // Display formatted data as modal
-            displayModal(formattedData);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An unexpected error occurred while previewing the PDF. Please try again.');
-    });
+  // Fetch session data
+  fetch(previewUrl, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+      },
+  })
+  .then(response => response.json())
+  .then(data => {
+      // Check if the docket is empty
+      if (Object.keys(data).length === 0) {
+          alert('Your docket is empty. Please queue some statements first.');
+      } else {
+          // Generate PDF with queued items
+          generatePDF(data);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('An unexpected error occurred while previewing the PDF. Please try again.');
+  });
 });
 
-// Function to format data as A4 sheet
-function formatAsA4Sheet(data) {
-    // Your formatting logic here
-    let formattedData = '<div class="preview-content">';
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            formattedData += `<div class="section">${key}</div>`;
-            formattedData += `<div class="data">${data[key]}</div>`;
-        }
-    }
-    formattedData += '</div>';
-    return formattedData;
+function generatePDF(data) {
+  // Initialize jsPDF
+  const doc = new jsPDF();
+
+  // Set font size and style
+  doc.setFontSize(12);
+
+  // Loop through each queued item and add it to the PDF
+  let pageNumber = 1;
+  for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+          const item = data[key];
+          // Add item content to the PDF
+          doc.text(`Page ${pageNumber}`, 10, 10); // Add page number
+          doc.text(item, 10, 20); // Add item content
+          if (pageNumber < Object.keys(data).length) {
+              doc.addPage(); // Add a new page if there are more items
+          }
+          pageNumber++;
+      }
+  }
+
+  // Save or open the PDF
+  doc.save('preview.pdf');
 }
 
-// Function to display data as modal
-function displayModal(formattedData) {
-    // Create modal element
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            ${formattedData}
-        </div>
-    `;
-    
-    // Append modal to body
-    document.body.appendChild(modal);
 
-    // Close modal when close button is clicked
-    modal.querySelector('.close').addEventListener('click', function() {
-        modal.style.display = 'none';
-        document.body.removeChild(modal);
-    });
+//Generating PDF VIEW
+document.getElementById('docketpdf').addEventListener('click', function() {
+  const generatePdfUrl = this.getAttribute('data-url-generate-pdf');
+  const clearSessionUrl = this.getAttribute('data-url-clear-session');
+  const savePdfUrl = this.getAttribute('data-url-save-pdf');
 
-    // Close modal when any part of the screen except the modal panel is clicked
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-            document.body.removeChild(modal);
-        }
-    });
+  // Fetch session data
+  fetch(generatePdfUrl, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+      },
+  })
+  .then(response => {
+      // Check if response is successful
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      // Check if response contains any data
+      if (response.status === 204) {
+          // If the queue is empty, alert the user
+          alert('Failed to generate PDF: The queue is empty. Please queue some statements first.');
+          throw new Error('Empty queue');
+      }
+      // If response is ok and contains data, return blob
+      return response.blob();
+  })
+  .then(blob => {
+      // Save the PDF into the database
+      return savePdfToDatabase(savePdfUrl, blob);
+  })
+  .then(() => {
+      // If PDF is saved successfully, reset the form
+      const form = document.getElementById('content1');
+      form.reset();
 
-    // Display modal
-    modal.style.display = 'block';
+      // Alert user that the docket has been registered successfully
+      alert('The docket has been registered successfully and forwarded for further processing.');
+
+      // Clear the session
+      return clearSession(clearSessionUrl);
+  })
+  .catch(error => {
+      // Handle errors
+      console.error('Error:', error);
+      alert('An unexpected error occurred while generating the PDF. Please try again.');
+  });
+});
+
+// Function to clear the session (queue)
+function clearSession(url) {
+  return fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+      },
+  })
+  .then(response => {
+      // Check if response is successful
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+  })
+  .catch(error => {
+      // Handle errors
+      console.error('Error:', error);
+      alert('An unexpected error occurred while clearing the session. Please try again.');
+  });
 }
+
+// Function to save the PDF into the database
+function savePdfToDatabase(url, blob) {
+  const formData = new FormData();
+  formData.append('file', blob, 'docket.pdf'); // Append the blob as a file
+
+  return fetch(url, {
+      method: 'POST',
+      body: formData,
+      headers: {
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+      },
+  })
+  .then(response => {
+      // Check if response is successful
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+  })
+  .catch(error => {
+      // Handle errors
+      console.error('Error:', error);
+      alert('An unexpected error occurred while saving the PDF to the database. Please try again.');
+  });
+}
+
+
+
+
 
 
 

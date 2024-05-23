@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
-from datetime import datetime
+import datetime
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from reportlab.lib import colors
@@ -31,7 +31,10 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.core.files.base import ContentFile
 from .models import Statement, PDFDocument
-
+import logging
+from django.http import JsonResponse
+logger = logging.getLogger(__name__)
+from django.utils import timezone
 
 
 
@@ -173,61 +176,95 @@ def clear_session(request):
 
 @csrf_exempt
 def preview_pdf(request):
-    # Retrieve queued statements from session
-    queued_statements = request.session.get('queued_statements', [])
+    try:
+        # Retrieve queued statements from session
+        queued_statements = request.session.get('queued_statements', [])
 
-    # Check if queued statements exist
-    if isinstance(queued_statements, list) and queued_statements:
-        # Format queued statements
-        formatted_statements = {}
-        for index, statement_content in enumerate(queued_statements):
-            formatted_statements[str(index)] = {
-                'content': statement_content
-            }
+        # Check if queued statements exist
+        if isinstance(queued_statements, list) and queued_statements:
+            # Format queued statements
+            formatted_statements = {}
+            for index, statement_content in enumerate(queued_statements):
+                formatted_statements[str(index)] = statement_content
 
-        # Return formatted statements as JSON response
-        return JsonResponse(formatted_statements)
-    else:
-        # If no queued statements exist, return an empty dictionary as JSON response
-        return JsonResponse({})
+            # Return formatted statements as JSON response
+            return JsonResponse(formatted_statements)
+        else:
+            # If no queued statements exist, return an empty dictionary as JSON response
+            return JsonResponse({})
+    except Exception as e:
+        logger.exception("Error occurred while previewing the PDF")
+        return JsonResponse({"error": str(e)}, status=500)
+
 
 
 
 @csrf_exempt
 def generate_pdf(request):
-    print("generate_pdf view called")  # Debugging statement
-    session_key = request.session.session_key
-    if not session_key:
-        return HttpResponse("No statements queued", status=400)
-    
-    session = Session.objects.get(session_key=session_key)
-    statements = Statement.objects.filter(session=session)
+    # Retrieve queued statements from session
+    queued_statements = request.session.get('queued_statements', [])
 
-    buffer = BytesIO()
-    p = canvas.Canvas(buffer)
-    
-    p.drawString(100, 800, "Docket Report")
-    
-    y = 750
-    for statement in statements:
-        p.drawString(100, y, f"{statement.statement_type} - {statement.created_at.strftime('%Y-%m-%d %H:%M:%S')}")
-        y -= 15
-        text = p.beginText(100, y)
-        text.textLines(statement.content)
-        p.drawText(text)
-        y -= len(statement.content.split('\n')) * 15 + 20
-    
-    p.showPage()
-    p.save()
+    # Check if queued statements exist
+    if isinstance(queued_statements, list) and queued_statements:
+        # Create a new PDF document
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
 
-    buffer.seek(0)
-    pdf_content = buffer.getvalue()
+        # Create a ReportLab canvas
+        pdf = canvas.Canvas(response, pagesize=letter)
 
-    pdf_document = PDFDocument()
-    pdf_document.file.save('docket.pdf', ContentFile(pdf_content))
+        # Set initial position
+        y_position = 750
 
-    response = HttpResponse(buffer, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
-    
-    Statement.objects.filter(session=session).delete()
-    return response
+        # Iterate through queued statements and write them to the PDF
+        for index, statement_content in enumerate(queued_statements):
+            # Write statement content to PDF
+            pdf.drawString(100, y_position, f'Statement {index + 1}: {statement_content}')
+            
+            # Move to the next line
+            y_position -= 20
+
+            # Add a page break after each statement
+            pdf.showPage()
+
+        # Save the PDF document
+        pdf.save()
+
+        # Return the PDF as response
+        return response
+    else:
+        # If no queued statements exist, return an error response
+        return JsonResponse({'success': False}, status=204)
+
+
+
+@csrf_exempt
+def save_pdf(request):
+    if request.method == 'POST':
+        if 'file' in request.FILES:
+            pdf_file = request.FILES['file']
+
+            # Generate a filename
+            officer_current_station = request.user.newofficerregistration.officer_current_station 
+            current_user = request.user.username
+            current_datetime = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+            filename = f"{officer_current_station}_{current_user}_{current_datetime}_docket.pdf"
+
+            # Define the file path
+            file_path = os.path.join(settings.MEDIA_ROOT, 'pdfs', filename)
+
+            # Create directory if it does not exist
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+            # Save the file
+            with open(file_path, 'wb') as f:
+                for chunk in pdf_file.chunks():
+                    f.write(chunk)
+
+            # Save file info to the database
+            PDFDocument.objects.create(user=request.user, file_path=file_path)
+
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'No file found in the request'}, status=400)
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
