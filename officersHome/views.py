@@ -35,7 +35,7 @@ import logging
 from django.http import JsonResponse
 logger = logging.getLogger(__name__)
 from django.utils import timezone
-
+from reportlab.lib.pagesizes import A4
 
 
 
@@ -201,41 +201,66 @@ def preview_pdf(request):
 
 @csrf_exempt
 def generate_pdf(request):
-    # Retrieve queued statements from session
-    queued_statements = request.session.get('queued_statements', [])
+    if request.method == 'POST':
+        # Retrieve queued statements from session
+        queued_statements = request.session.get('queued_statements', [])
 
-    # Check if queued statements exist
-    if isinstance(queued_statements, list) and queued_statements:
-        # Create a new PDF document
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
+        # Check if queued statements exist
+        if isinstance(queued_statements, list) and queued_statements:
+            # Create a new PDF document with a padding of 2 inches around the entire page
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="docket.pdf"'
 
-        # Create a ReportLab canvas
-        pdf = canvas.Canvas(response, pagesize=letter)
+            # Create a ReportLab canvas with letter size and 2 inches padding
+            pdf = canvas.Canvas(response, pagesize=(letter[0] - 144, letter[1] - 144))
 
-        # Set initial position
-        y_position = 750
+            # Set initial position with padding
+            x_position = 72  # 1 inch padding from left
+            y_position = letter[1] - 72  # 1 inch padding from top
 
-        # Iterate through queued statements and write them to the PDF
-        for index, statement_content in enumerate(queued_statements):
-            # Write statement content to PDF
-            pdf.drawString(100, y_position, f'Statement {index + 1}: {statement_content}')
-            
-            # Move to the next line
-            y_position -= 20
+            # Iterate through queued statements and write them to the PDF
+            for index, statement_content in enumerate(queued_statements):
+                # Add a page break before writing new statement content
+                if index > 0:
+                    pdf.showPage()
 
-            # Add a page break after each statement
-            pdf.showPage()
+                # Ensure statement_content is a string
+                if isinstance(statement_content, dict):
+                    # Convert dict to string
+                    statement_content = str(statement_content)
 
-        # Save the PDF document
-        pdf.save()
+                # Calculate the width of the text
+                text_width = pdf.stringWidth(statement_content, "Helvetica", 12)
 
-        # Return the PDF as response
-        return response
-    else:
-        # If no queued statements exist, return an error response
-        return JsonResponse({'success': False}, status=204)
+                # Check if the text exceeds the available width
+                if x_position + text_width > letter[0] - 72:  # Check if text goes beyond right padding
+                    # Move to the next line
+                    y_position -= 20  # Assuming font size 12, adjust as needed
+                    # Reset x_position to start from the left edge
+                    x_position = 72
 
+                # Check if the text goes beyond the bottom padding
+                if y_position < 72:
+                    # Add a new page
+                    pdf.showPage()
+                    # Reset y_position to the top edge with padding
+                    y_position = letter[1] - 72
+
+                # Write statement content to PDF
+                pdf.drawString(x_position, y_position, statement_content)
+
+                # Move to the next line
+                y_position -= 20  # Assuming font size 12, adjust as needed
+
+            # Save the PDF document
+            pdf.save()
+
+            # Return the PDF as response
+            return response
+        else:
+            # If no queued statements exist, return an error response
+            return JsonResponse({'success': False, 'error': 'Queue is empty'}, status=400)
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
 
 
 @csrf_exempt
@@ -244,8 +269,8 @@ def save_pdf(request):
         if 'file' in request.FILES:
             pdf_file = request.FILES['file']
 
-            # Generate a filename
-            officer_current_station = request.user.newofficerregistration.officer_current_station 
+            # Generate a unique filename
+            officer_current_station = request.user.newofficerregistration.officer_current_station
             current_user = request.user.username
             current_datetime = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
             filename = f"{officer_current_station}_{current_user}_{current_datetime}_docket.pdf"
@@ -262,7 +287,10 @@ def save_pdf(request):
                     f.write(chunk)
 
             # Save file info to the database
-            PDFDocument.objects.create(user=request.user, file_path=file_path)
+            #PDFDocument.objects.create(user=request.user, file_path=file_path)
+
+            # Clear the session queue
+            request.session['queued_statements'] = []
 
             return JsonResponse({'success': True})
         else:

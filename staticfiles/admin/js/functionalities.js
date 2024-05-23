@@ -214,99 +214,76 @@ function generatePDF(data) {
 //Generating PDF VIEW
 document.getElementById('docketpdf').addEventListener('click', function() {
   const generatePdfUrl = this.getAttribute('data-url-generate-pdf');
-  const clearSessionUrl = this.getAttribute('data-url-clear-session');
   const savePdfUrl = this.getAttribute('data-url-save-pdf');
+  const clearSessionUrl = this.getAttribute('data-url-clear-session');
 
-  // Fetch session data
+  // Generate the PDF
   fetch(generatePdfUrl, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
-      },
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+    },
   })
   .then(response => {
-      // Check if response is successful
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-      // Check if response contains any data
-      if (response.status === 204) {
-          // If the queue is empty, alert the user
-          alert('Failed to generate PDF: The queue is empty. Please queue some statements first.');
-          throw new Error('Empty queue');
-      }
-      // If response is ok and contains data, return blob
-      return response.blob();
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.blob();
   })
   .then(blob => {
-      // Save the PDF into the database
-      return savePdfToDatabase(savePdfUrl, blob);
-  })
-  .then(() => {
-      // If PDF is saved successfully, reset the form
-      const form = document.getElementById('content1');
-      form.reset();
+    if (blob.size === 0) {
+      alert('Failed to generate PDF: The queue is empty. Please queue some statements first.');
+      return;
+    }
 
-      // Alert user that the docket has been registered successfully
-      alert('The docket has been registered successfully and forwarded for further processing.');
+    // Save the PDF file to the server
+    const formData = new FormData();
+    formData.append('file', blob, 'docket.pdf');
 
-      // Clear the session
-      return clearSession(clearSessionUrl);
-  })
-  .catch(error => {
-      // Handle errors
-      console.error('Error:', error);
-      alert('An unexpected error occurred while generating the PDF. Please try again.');
-  });
-});
-
-// Function to clear the session (queue)
-function clearSession(url) {
-  return fetch(url, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
-      },
-  })
-  .then(response => {
-      // Check if response is successful
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-  })
-  .catch(error => {
-      // Handle errors
-      console.error('Error:', error);
-      alert('An unexpected error occurred while clearing the session. Please try again.');
-  });
-}
-
-// Function to save the PDF into the database
-function savePdfToDatabase(url, blob) {
-  const formData = new FormData();
-  formData.append('file', blob, 'docket.pdf'); // Append the blob as a file
-
-  return fetch(url, {
+    return fetch(savePdfUrl, {
       method: 'POST',
       body: formData,
       headers: {
-          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+        'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
       },
+    });
   })
   .then(response => {
-      // Check if response is successful
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
+    if (!response.ok) {
+      throw new Error('Failed to save PDF');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.success) {
+      // Alert user that the docket has been registered successfully
+      alert('The docket has been registered successfully and forwarded for further processing.');
+
+      // Clear the session queue
+      return fetch(clearSessionUrl, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+        },
+      });
+    } else {
+      alert('Failed to save PDF: ' + data.error);
+    }
+  })
+  .then(response => {
+    if (response && response.ok) {
+      // Reset the form
+      const form = document.getElementById('content1');
+      form.reset();
+    }
   })
   .catch(error => {
-      // Handle errors
-      console.error('Error:', error);
-      alert('An unexpected error occurred while saving the PDF to the database. Please try again.');
+    console.error('Error:', error);
+    alert('An unexpected error occurred while generating the PDF. Please try again.');
   });
-}
+});
+
 
 
 
