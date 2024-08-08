@@ -40,6 +40,10 @@ from reportlab.lib.pagesizes import A4
 
 
 
+# Home Selector
+def selectPurpose(request):
+    return render(request, 'selectPurpose.html')
+
 # officer Registrations Views
 def redirect_with_delay(request, url, delay_seconds=3):
     return render(request, 'redirect_with_delay.html', {'url': url, 'delay_seconds': delay_seconds})
@@ -119,12 +123,10 @@ def officer_login(request):
     return render(request, 'officer_login.html', {'form': form, 'error_message': error_message})
 
 
-
-
 # officer logout views
 def officer_logout(request):
     logout(request)
-    request.session.flush()  # This ensures the session is completely cleared
+    request.session.flush()
     return redirect(reverse('officer_login'))
 
 # full Casebox details
@@ -140,7 +142,6 @@ def profile_view(request):
 
 
 
-###################################################################################
 @csrf_exempt
 def queue_statement(request):
     if request.method == 'POST':

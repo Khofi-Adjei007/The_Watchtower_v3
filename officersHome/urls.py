@@ -19,6 +19,7 @@ urlpatterns = [
     path('officer_login/', views.officer_login, name='officer_login'),
     path('officer_logout/', views.officer_logout, name='officer_logout'),
     path('profile_view/', views.profile_view, name='profile_view'),
+    path('selectPurpose/', views.selectPurpose, name='selectPurpose')
 ]
 
 if settings.DEBUG:

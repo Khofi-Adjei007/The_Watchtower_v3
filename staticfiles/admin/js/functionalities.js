@@ -341,6 +341,7 @@ document.getElementById('docketpdf').addEventListener('click', function() {
   });
 
 
+  
 // Acocunt dropdown menu
 document.addEventListener('DOMContentLoaded', (event) => {
     const button = document.getElementById('dropdownOfficerNameButton');

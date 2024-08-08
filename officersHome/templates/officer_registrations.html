@@ -30,7 +30,6 @@
                     
                     {% for field in form %}
                     <div>
-
                         {% if field.name == 'middle_name' %}
                         <label for="{{ field.name }}" class="block text-gray-700">{{ field.label }}<span class="hidden text-red-700 ml-1">*</span></label>
                         {% else %}
