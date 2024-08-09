@@ -1,3 +1,4 @@
+
 from django import forms
 from django.db import models
 from .models import NewOfficerRegistration, OfficerLogin
@@ -166,5 +167,3 @@ class officerRegistrationsForms(forms.Form):
 class officer_loginForms(forms.Form):
     username = forms.CharField(label='Enter User Name')
     password = forms.CharField(label="Enter Password",max_length=128, widget=forms.PasswordInput)
-
-
