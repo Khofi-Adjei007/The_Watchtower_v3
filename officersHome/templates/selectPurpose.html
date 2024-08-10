@@ -22,7 +22,12 @@
                 <img class="h-12 mr-4" src="{% static 'staticfiles/admin/img/download.png' %}" alt="Your Company">
                 <div class="">
                 <h1 class="uppercase font-extrabold text-xl">West Lands Police Post</h1>
-                <h3>Ayawaso West Wuogon - Accra</h3>
+                <h3 class="flex flex-row">Ayawaso West Wuogon - Accra    
+                    <div class="divide-x-reverse ml-4 flex items-center text-xs cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                    </svg>    
+                </div></h3>
                 </div>
                 </div>
 
@@ -31,7 +36,7 @@
                     <a class="grid grid-cols-2 p-3 items-center justify-center mx-auto w-[100%]">
                     <button class="bg-blue-950 m-2 px-9 py-9 rounded-lg font-bold text-3xl w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-blue-800 duration-200 ...">New <br> Docket</button>
                     <button class="bg-green-600  m-2 px-9 py-9 rounded-lg font-bold text-3xl w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-200 ..."> Search Database</button>
-                    <button class="bg-orange-600 m-2 px-9 py-9 rounded-lg font-bold text-3xl  w-[90%] shadow-lg  transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-200 ...">Case & Progress</button>
+                    <button class="bg-orange-600 m-2 px-9 py-9 rounded-lg font-bold text-3xl  w-[90%] shadow-lg  transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-200 ...">Cases & Case Progress</button>
                     <button class="bg-red-600 m-2 px-5 py-9 rounded-lg font-bold text-3xl  w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-red-500 duration-200 ...">Command Messaging</button>
                     </a>
                 </div>  
@@ -43,17 +48,26 @@
                 <span class="font-semibold">Mintah Benjamin</span>
                 <span class="text-xs">No.53694, Sargent</span>
                 </div>
-                <div class="divide-x-reverse ml-4 flex items-center text-xs">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
-                    </svg>    
-                </div>
-                
 
+                <!--User DropDown menu-->
+                <div class="relative inline-block text-left ml-8">
+                    <button id="dropdownButton" class="bg-red-600 hover:bg-red-500 p-2 w-8 h-8 flex items-center justify-center rounded-full text-white shadow-lg">
+                        <ion-icon name="chevron-down-outline" class="text-xl"></ion-icon>
+                    </button>
+                
+                    <!-- Dropdown menu -->
+                    <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 transform -translate-y-2 transition duration-300 ease-in-out">
+                        <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-300">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-300">Settings</a>
+                        <a href="#" class="block px-4 py-2 text-sm font-semibold text-red-600 hover:bg-blue-300">Logout</a>
+                    </div>
                 </div>
                 
-                <!-- <button class="mr-2 bg-blue-800 hover:bg-sky-700 p-3">Logout</button>
-                <button class="mr-2 bg-blue-800 hover:bg-sky-700 p-3">Settings</button> -->
+                <!--End - User DropDown menu-->
+                
+                </div>
+              
+              
             </div>
             
             <!--Base Bar and Content-->
@@ -62,5 +76,26 @@
         </div>
         <!--End of Staff ID-->
     </div>
+    <script>
+
+            //Function to Implemenet Dropdown Menu
+            const dropdownButton = document.getElementById('dropdownButton');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+
+            dropdownButton.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('hidden');
+                dropdownMenu.classList.toggle('opacity-0');
+                dropdownMenu.classList.toggle('translate-y-2');
+            });
+
+            window.addEventListener('click', function(event) {
+                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                    dropdownMenu.classList.add('opacity-0');
+                    dropdownMenu.classList.add('translate-y-2');
+                }
+            });
+
+    </script>
 </body>
 </html>

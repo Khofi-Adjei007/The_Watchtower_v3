@@ -1,5 +1,4 @@
-
-
+// Form Reset Button
 document.getElementById('resetbutton').addEventListener('click', function() {
   const form = document.getElementById('content1');
 
@@ -22,11 +21,11 @@ document.getElementById('resetbutton').addEventListener('click', function() {
   form.reset();
   alert('Form has been reset!');
 
-  // You can use formData for any further processing if needed
+  // Use formData for any further processing if needed
   console.log(formData);
 });
 
-
+// Queue Statement Button
 document.getElementById('queueStatment').addEventListener('click', function() {
   const form = document.getElementById('content1');
   const url = this.getAttribute('data-url-queue-statement');
@@ -96,8 +95,7 @@ document.getElementById('queueStatment').addEventListener('click', function() {
   });
 });
 
-
-//Drop Docket Functionality
+// Drop Docket Functionality
 document.getElementById('dropDocketBtn').addEventListener('click', function() {
   const checkSessionUrl = this.getAttribute('data-url-check-session');
   const clearSessionUrl = this.getAttribute('data-url-clear-session');
@@ -155,8 +153,7 @@ document.getElementById('dropDocketBtn').addEventListener('click', function() {
   });
 });
 
-
-//Button to preview the PDF
+// Preview PDF Button
 document.getElementById('previewBtn').addEventListener('click', function() {
   const previewUrl = this.getAttribute('data-url-preview-pdf');
 
@@ -184,6 +181,7 @@ document.getElementById('previewBtn').addEventListener('click', function() {
   });
 });
 
+// Generate PDF Function
 function generatePDF(data) {
   // Initialize jsPDF
   const doc = new jsPDF();
@@ -210,8 +208,7 @@ function generatePDF(data) {
   doc.save('preview.pdf');
 }
 
-
-//Generating PDF VIEW
+// Generating PDF View
 document.getElementById('docketpdf').addEventListener('click', function() {
   const generatePdfUrl = this.getAttribute('data-url-generate-pdf');
   const savePdfUrl = this.getAttribute('data-url-save-pdf');
@@ -219,274 +216,209 @@ document.getElementById('docketpdf').addEventListener('click', function() {
 
   // Generate the PDF
   fetch(generatePdfUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
-    },
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+      },
   })
   .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.blob();
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.blob();
   })
   .then(blob => {
-    if (blob.size === 0) {
-      alert('Failed to generate PDF: The queue is empty. Please queue some statements first.');
-      return;
-    }
+      if (blob.size === 0) {
+          alert('Failed to generate PDF: The queue is empty. Please queue some statements first.');
+          return;
+      }
 
-    // Save the PDF file to the server
-    const formData = new FormData();
-    formData.append('file', blob, 'docket.pdf');
+      // Save the PDF file to the server
+      const formData = new FormData();
+      formData.append('file', blob, 'docket.pdf');
 
-    return fetch(savePdfUrl, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
-      },
-    });
+      return fetch(savePdfUrl, {
+          method: 'POST',
+          body: formData,
+          headers: {
+              'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+          },
+      });
   })
   .then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to save PDF');
-    }
-    return response.json();
+      if (!response.ok) {
+          throw new Error('Failed to save PDF');
+      }
+      return response.json();
   })
   .then(data => {
-    if (data.success) {
-      // Alert user that the docket has been registered successfully
-      alert('The docket has been registered successfully and forwarded for further processing.');
+      if (data.success) {
+          // Alert user that the docket has been registered successfully
+          alert('The docket has been registered successfully and forwarded for further processing.');
 
-      // Clear the session queue
-      return fetch(clearSessionUrl, {
-        method: 'POST',
-        headers: {
-          'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
-        },
-      });
-    } else {
-      alert('Failed to save PDF: ' + data.error);
-    }
+          // Clear the session queue
+          return fetch(clearSessionUrl, {
+              method: 'POST',
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}', // Add your CSRF token here
+              },
+          });
+      } else {
+          alert('Failed to save PDF: ' + data.error);
+      }
   })
   .then(response => {
-    if (response && response.ok) {
-      // Reset the form
-      const form = document.getElementById('content1');
-      form.reset();
-    }
+      if (response && response.ok) {
+          // Reset the form
+          const form = document.getElementById('content1');
+          form.reset();
+      }
   })
   .catch(error => {
-    console.error('Error:', error);
-    alert('An unexpected error occurred while generating the PDF. Please try again.');
+      console.error('Error:', error);
+      alert('An unexpected error occurred while generating the PDF. Please try again.');
   });
 });
 
+// Dropdown Menu Functions
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //Notification dropdown menu
-    document.addEventListener('DOMContentLoaded', (event) => {
-    const dropdownButtons = [
+// Notification dropdown menu
+document.addEventListener('DOMContentLoaded', function () {
+  const dropdownButtons = [
       {
-        button: document.getElementById('dropdownNotificationNameButton'),
-        dropdown: document.getElementById('dropdownNotification')
+          button: document.getElementById('dropdownNotificationNameButton'),
+          dropdown: document.getElementById('dropdownNotification')
       },
       {
-        button: document.getElementById('dropdownNotificationNameButton'),
-        dropdown: document.getElementById('dropdownNotification')
+          button: document.getElementById('dropdownNotificationNameButton'),
+          dropdown: document.getElementById('dropdownNotification')
       }
-    ];
+  ];
 
-    dropdownButtons.forEach(({ button, dropdown }) => {
+  dropdownButtons.forEach(({ button, dropdown }) => {
       button.addEventListener('click', (event) => {
-        dropdown.classList.toggle('hidden');
-        event.stopPropagation();
+          dropdown.classList.toggle('hidden');
+          event.stopPropagation();
       });
-    });
-
-    document.addEventListener('click', (event) => {
-      dropdownButtons.forEach(({ dropdown }) => {
-        if (!dropdown.classList.contains('hidden')) {
-          dropdown.classList.add('hidden');
-        }
-      });
-    });
-
-    dropdownButtons.forEach(({ dropdown }) => {
-      dropdown.addEventListener('click', (event) => {
-        event.stopPropagation();
-      });
-    });
   });
 
+  document.addEventListener('click', (event) => {
+      dropdownButtons.forEach(({ dropdown }) => {
+          if (!dropdown.classList.contains('hidden')) {
+              dropdown.classList.add('hidden');
+          }
+      });
+  });
 
-  
-// Acocunt dropdown menu
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('dropdownOfficerNameButton');
-    const dropdown = document.getElementById('dropdownOfficerName');
+  dropdownButtons.forEach(({ dropdown }) => {
+      dropdown.addEventListener('click', (event) => {
+          event.stopPropagation();
+      });
+  });
+});
 
-    button.addEventListener('click', (event) => {
+// Account dropdown menu
+document.addEventListener('DOMContentLoaded', function () {
+  const button = document.getElementById('dropdownOfficerNameButton');
+  const dropdown = document.getElementById('dropdownOfficerName');
+
+  button.addEventListener('click', (event) => {
       dropdown.classList.toggle('hidden');
       event.stopPropagation();
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!dropdown.classList.contains('hidden')) {
-        dropdown.classList.add('hidden');
-      }
-    });
-
-    dropdown.addEventListener('click', (event) => {
-      event.stopPropagation();
-    });
   });
 
+  document.addEventListener('click', (event) => {
+      if (!dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+      }
+  });
 
-    // Get the button and dropdown menu
-    const button = document.getElementById('dropdownRadioButton');
-    const dropdownMenu = document.getElementById('dropdownDefaultRadio');
+  dropdown.addEventListener('click', (event) => {
+      event.stopPropagation();
+  });
+});
 
-    // Toggle dropdown menu visibility
-    button.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('hidden');
-    });
+// Avatar dropdown menu
+document.addEventListener('DOMContentLoaded', function () {
+  const button = document.getElementById('dropdownAvatarNameButton');
+  const dropdown = document.getElementById('dropdownAvatarName');
 
-    // Close dropdown menu when clicked outside
-    document.addEventListener('click', (event) => {
-        const target = event.target;
-        if (!button.contains(target) && !dropdownMenu.contains(target)) {
-            dropdownMenu.classList.add('hidden');
-        }
-    });
+  // Toggle dropdown menu visibility
+  button.addEventListener('click', function () {
+      dropdown.classList.toggle('hidden');
+  });
 
-    // Hide dropdown menu when an item is selected
-    const radioInputs = dropdownMenu.querySelectorAll('input[type="radio"]');
-    radioInputs.forEach(input => {
-        input.addEventListener('change', () => {
-            dropdownMenu.classList.add('hidden');
-        });
-    });
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function (event) {
+      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.classList.add('hidden');
+      }
+  });
+});
 
+// Radio button dropdown menu
+const button = document.getElementById('dropdownRadioButton');
+const dropdownMenu = document.getElementById('dropdownDefaultRadio');
 
+// Toggle dropdown menu visibility
+button.addEventListener('click', () => {
+  dropdownMenu.classList.toggle('hidden');
+});
 
-//////////////////////////
+// Close dropdown menu when clicked outside
+document.addEventListener('click', (event) => {
+  const target = event.target;
+  if (!button.contains(target) && !dropdownMenu.contains(target)) {
+      dropdownMenu.classList.add('hidden');
+  }
+});
 
+// Hide dropdown menu when an item is selected
+const radioInputs = dropdownMenu.querySelectorAll('input[type="radio"]');
+radioInputs.forEach(input => {
+  input.addEventListener('change', () => {
+      dropdownMenu.classList.add('hidden');
+  });
+});
 
-
-
-  // Get the container element
-  const clickedItem = document.getElementById('clicked_item');
-
-    // Get all nav bar elements
-    const navBars = document.querySelectorAll('li');
+// Navigation Bar
+const clickedItem = document.getElementById('clicked_item');
+const navBars = document.querySelectorAll('li');
 
 // Add click event listener to each nav bar
 navBars.forEach(navBar => {
-    navBar.addEventListener('click', () => {
-        // Get the text content of the clicked nav bar
-        const navBarName = navBar.textContent.trim();
-
-        // Update the content of the clicked_item container
-        clickedItem.querySelector('strong').textContent = navBarName;
-    });
+  navBar.addEventListener('click', () => {
+      const navBarName = navBar.textContent.trim();
+      clickedItem.querySelector('strong').textContent = navBarName;
+  });
 });
 
-
-
- function showContent(contentId) {
-      // Hide all content boxes
-      var contentBoxes = document.getElementsByClassName("content-box");
-      for (var i = 0; i < contentBoxes.length; i++) {
-          contentBoxes[i].classList.add("hidden");
-      }
-
-      // Show the selected content box
-      document.getElementById(contentId).classList.remove("hidden");
+// Content Box Visibility
+function showContent(contentId) {
+  // Hide all content boxes
+  var contentBoxes = document.getElementsByClassName("content-box");
+  for (var i = 0; i < contentBoxes.length; i++) {
+      contentBoxes[i].classList.add("hidden");
   }
 
-  // Show the default content when the page loads
-  showContent('home');
+  // Show the selected content box
+  document.getElementById(contentId).classList.remove("hidden");
+}
 
+// Show the default content when the page loads
+showContent('home');
 
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const button = document.getElementById('dropdownNotificationButton');
-    const dropdown = document.getElementById('dropdownNotification');})
-
-// Dropdown menu for user avatar
-document.addEventListener('DOMContentLoaded', function () {
-    const button = document.getElementById('dropdownAvatarNameButton');
-    const dropdown = document.getElementById('dropdownAvatarName');
-
-    // Toggle dropdown menu visibility
-    button.addEventListener('click', function () {
-      dropdown.classList.toggle('hidden');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.add('hidden');
-      }
-    });
-  });
-
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const button = document.getElementById('dropdownNotificationButton');
-    const dropdown = document.getElementById('dropdownNotification');
-
-    // Toggle dropdown menu visibility
-    button.addEventListener('click', function () {
-      const buttonRect = button.getBoundingClientRect();
-      dropdown.style.top = `${buttonRect.bottom}px`;
-      dropdown.style.left = `${buttonRect.left}px`;
-      dropdown.classList.toggle('hidden');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-      if (!button.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.add('hidden');
-      }
-    });
-  });
-
-            // Get all the tabs
+// Tabs
 const tabs = document.querySelectorAll('.border-b-2');
 
 // Add event listener to each tab
 tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        // Remove 'active' class from all tabs
-        tabs.forEach(t => t.classList.remove('active'));
+  tab.addEventListener('click', () => {
+      // Remove 'active' class from all tabs
+      tabs.forEach(t => t.classList.remove('active'));
 
-        // Add 'active' class to the clicked tab
-        tab.classList.add('active');
-    });
+      // Add 'active' class to the clicked tab
+      tab.classList.add('active');
+  });
 });
