@@ -38,9 +38,8 @@ from django.utils import timezone
 from reportlab.lib.pagesizes import A4
 
 
-
-
 # Home Selector
+@csrf_exempt
 def selectPurpose(request):
     return render(request, 'selectPurpose.html')
 
