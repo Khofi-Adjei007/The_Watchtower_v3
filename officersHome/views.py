@@ -43,6 +43,10 @@ from reportlab.lib.pagesizes import A4
 def selectPurpose(request):
     return render(request, 'selectPurpose.html')
 
+@csrf_protect
+def docketforms(request):
+    return render(request, 'docketforms.html')
+
 # officer Registrations Views
 def redirect_with_delay(request, url, delay_seconds=3):
     return render(request, 'redirect_with_delay.html', {'url': url, 'delay_seconds': delay_seconds})

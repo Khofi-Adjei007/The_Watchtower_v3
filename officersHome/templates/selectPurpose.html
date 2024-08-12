@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> The Watchtower | Login</title>
+    <title>Select Purpose | The Watchtower</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -20,26 +20,41 @@
                 <img class="h-12 mr-4" src="{% static 'staticfiles/admin/img/download.png' %}" alt="Your Company">
                 <div class="">
                 <h1 class="uppercase font-extrabold text-xl">West Lands Police Post</h1>
-                <h3 class="flex flex-row">Ayawaso West Wuogon - Accra    
-                    <div class="divide-x-reverse ml-4 flex items-center text-xs cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
-                    </svg>    
-                </div></h3>
+                <h3 class="flex flex-row">Ayawaso West Wuogon - Accra
+
+                <div class="relative ml-2 flex items-center text-xs cursor-pointer">
+                <svg id="infoIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                </svg>
+                        
+                <!-- Popover -->
+                <div class="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-white text-black text-sm rounded-lg shadow-lg opacity-0 transition-opacity duration-300 w-64 p-4 z-10 pointer-events-none group-hover:pointer-events-auto" id="popover">
+                <h3 class="font-bold mb-2">Police Post Information</h3>
+                <p><strong>Station Officer:</strong> [Officer Name]</p>
+                <p><strong>Assigned Officers:</strong> [Number of Officers]</p>
+                <p><strong>Ranks:</strong> [Officer Ranks]</p>
+                <p><strong>Positions:</strong> [Officer Positions]</p>
+                <p><strong>Departments:</strong> [Departments]</p>
+                <!-- Add more interactive elements -->
+                <button class="mt-2 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">More Info</button>
+                </div>
+                </div>
+                </h3>
                 </div>
                 </div>
 
 
                 <div class="mx-auto justify-center text-gray-100 py-16 w-[80%] h-auto ">
-                    <a class="grid grid-cols-2 p-3 items-center justify-center mx-auto w-[100%]">
-                    <button class="bg-blue-950 m-2 px-9 py-9 rounded-lg font-bold text-3xl w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-blue-800 duration-200 ...">New <br> Docket</button>
-                    <button class="bg-green-600  m-2 px-9 py-9 rounded-lg font-bold text-3xl w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-200 ..."> Search Database</button>
-                    <button class="bg-orange-600 m-2 px-9 py-9 rounded-lg font-bold text-3xl  w-[90%] shadow-lg  transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-200 ...">Cases & Progress</button>
-                    <button class="bg-red-600 m-2 px-5 py-9 rounded-lg font-bold text-3xl  w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-red-500 duration-200 ...">Command Messaging</button>
-                    </a>
-                </div>  
+                <a class="grid grid-cols-2 p-3 items-center justify-center mx-auto w-[100%]">
+                <button class="bg-blue-950 m-2 px-9 py-9 rounded-lg font-bold text-3xl w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-blue-800 duration-200 ...">New <br> Docket</button>
+                <button class="bg-green-600  m-2 px-9 py-9 rounded-lg font-bold text-3xl w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-200 ..."> Search Database</button>
+                <button class="bg-orange-600 m-2 px-9 py-9 rounded-lg font-bold text-3xl  w-[90%] shadow-lg  transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-200 ...">Cases & Progress</button>
+                <button class="bg-red-600 m-2 px-5 py-9 rounded-lg font-bold text-3xl  w-[90%] shadow-lg transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-red-500 duration-200 ...">Command Messaging</button>
+                </a>
+                </div> 
+
             <!--Base Bar and Content-->
-            <div class="bg-blue-950 justify-center items-center rounded-md w-full h-auto p-2 text-gray-100 flex flex-row shadow-lg">
+                <div class="bg-blue-950 justify-center items-center rounded-md w-full h-auto p-2 text-gray-100 flex flex-row shadow-lg">
                 <div class="rounded-md ring-2 ring-gray-300 p-2 flex items-center">
                 <img class="mr-2 w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmQ0VYN539qcIPRU9O0eizGRPKEVg6rRL1IHZUKHMIZJjr06NjlH9vJaxmPlFf2rABcdo&usqp=CAUg" alt="Bordered avatar">
                 <div class="flex flex-col">
@@ -49,24 +64,21 @@
 
                 <!--User DropDown menu-->
                 <div class="relative inline-block text-left ml-8">
-                    <button id="dropdownButton" class="bg-red-600 hover:bg-red-500 p-2 w-8 h-8 flex items-center justify-center rounded-full text-white shadow-lg">
-                        <ion-icon name="chevron-down-outline" class="text-xl"></ion-icon>
-                    </button>
+                  <button id="dropdownButton" class="bg-red-600 hover:bg-red-500 p-2 w-8 h-8 flex items-center justify-center rounded-full text-white shadow-lg">
+                    <ion-icon id="dropdownIcon" name="chevron-down-outline" class="text-xl transition-transform duration-300"></ion-icon>
+                </button>
+
                 
-                    <!-- Dropdown menu -->
-                    <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 transform -translate-y-2 transition duration-300 ease-in-out">
-                        <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-300">Profile</a>
-                        <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-300">Settings</a>
-                        <a href="#" class="block px-4 py-2 text-sm font-semibold text-red-600 hover:bg-blue-300">Logout</a>
-                    </div>
+                <!-- Dropdown menu -->
+                <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 transform -translate-y-2 transition duration-300 ease-in-out">
+                <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-300">Profile</a>
+                <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-300">Settings</a>
+                <a href="#" class="block px-4 py-2 text-sm font-semibold text-red-600 hover:bg-blue-300">Logout</a>
                 </div>
-                
+                </div>
                 <!--End - User DropDown menu-->
-                
                 </div>
-              
-              
-            </div>
+                </div>
             
             <!--Base Bar and Content-->
 
@@ -74,25 +86,64 @@
         </div>
         <!--End of Staff ID-->
     </div>
+    
     <script>
-
-            //Function to Implemenet Dropdown Menu
+            // Function to Implement Dropdown Menu
             const dropdownButton = document.getElementById('dropdownButton');
             const dropdownMenu = document.getElementById('dropdownMenu');
+            const dropdownIcon = document.getElementById('dropdownIcon');
 
             dropdownButton.addEventListener('click', function() {
                 dropdownMenu.classList.toggle('hidden');
                 dropdownMenu.classList.toggle('opacity-0');
-                dropdownMenu.classList.toggle('translate-y-2');
+                dropdownMenu.classList.toggle('-translate-y-40');
+
+                dropdownIcon.classList.toggle('rotate-180');
             });
 
             window.addEventListener('click', function(event) {
                 if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
                     dropdownMenu.classList.add('hidden');
                     dropdownMenu.classList.add('opacity-0');
-                    dropdownMenu.classList.add('translate-y-2');
+                    dropdownMenu.classList.add('-translate-y-40');
+
+                    dropdownIcon.classList.remove('rotate-180');
                 }
             });
+
+
+
+            // Get the elements
+            const infoIcon = document.getElementById('infoIcon');
+            const popover = document.getElementById('popover');
+
+            // Function to show the popover
+            function showPopover() {
+                popover.classList.remove('opacity-0', 'pointer-events-none');
+                popover.classList.add('opacity-100', 'pointer-events-auto');
+            }
+
+            // Function to hide the popover
+            function hidePopover() {
+                popover.classList.remove('opacity-100', 'pointer-events-auto');
+                popover.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            // Show the popover on hover over the icon
+            infoIcon.addEventListener('mouseenter', showPopover);
+
+            // Keep the popover visible when hovering over it
+            popover.addEventListener('mouseenter', showPopover);
+
+            // Hide the popover when the mouse leaves both the icon and the popover
+            infoIcon.addEventListener('mouseleave', function() {
+                setTimeout(function() {
+                    if (!popover.matches(':hover')) {
+                        hidePopover();
+                    }
+                }, 100);
+            });
+            popover.addEventListener('mouseleave', hidePopover);
 
     </script>
 </body>
