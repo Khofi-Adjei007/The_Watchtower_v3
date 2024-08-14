@@ -14,142 +14,285 @@
 <body>
     <div class="min-h-screen py-14 px-36 bg-gray-900 bg-cover bg-center">
         <div class="max-w-3xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-
-            <div class="justify-center items-center mb-6 flex flex-row">
+            <div class="justify-center items-center mb-6 flex flex-row bg-blue-950 p-3 rounded-md">
             <img class="h-12 mr-4" src="{% static 'staticfiles/admin/img/download.png' %}" alt="Your Company">
-            <h2 class="text-3xl text-gray-800 font-bold uppercase">DOCKET REGISTRATION FORMS</h2>
+            <h2 class="text-3xl text-gray-100 font-bold uppercase">DOCKET REGISTRATION FORMS</h2>
             </div>
         
-            <!-- Case Information Section -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-700 mb-4">Case Information</h3>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <!-- Case Information Section -->
+<ol id="stepper" class="flex flex-wrap mx-auto w-full items-center justify-center p-2 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 mb-4 shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 rtl:space-x-reverse">
+    <li data-step="1" class="flex items-center text-blue-600 dark:text-blue-500 whitespace-nowrap cursor-pointer">
+        <span class="flex items-center justify-center w-4 h-4 me-2 text-xs border border-blue-600 rounded-full shrink-0 dark:border-blue-500">1</span>
+        General Case Info
+        <svg class="w-3 h-3 ms-2 sm:ms-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+        </svg>
+    </li>
+    
+    <li data-step="2" class="flex items-center text-gray-500 dark:text-gray-400 whitespace-nowrap cursor-pointer">
+        <span class="flex items-center justify-center w-4 h-4 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">2</span>
+        Parties' Statements
+        <svg class="w-3 h-3 ms-2 sm:ms-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+        </svg>
+    </li>
+    
+    <li data-step="3" class="flex items-center text-gray-500 dark:text-gray-400 whitespace-nowrap cursor-pointer">
+        <span class="flex items-center justify-center w-4 h-4 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">3</span>
+        Attachments & Submission
+    </li>  
+</ol>
+
+
+
+            <div class="mb-8 bg-green-200 p-2">
+                <div id="stepGroup1" class="step-group" data-step-group="1">
+                    <!-- Content for Step 1 -->
+                <div class="flex items-center my-4">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="px-4 text-gray-700 font-bold uppercas italic">Case Information</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+                <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Case Number/ID</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Auto-generated" disabled>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Auto-generated" disabled>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Case Title/Description</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter case title">
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter case title">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Date & Time of Incident</label>
-                        <input type="datetime-local" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-1 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="datetime-local" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Date & Time of Report</label>
-                        <input type="datetime-local" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-1 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="datetime-local" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                 </div>
-            </div>
-        
-            <!-- Reporting Officer Information Section -->
-            <div>
-                
-            </div>
-
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-700 mb-4">Reporting Officer</h3>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Officer Name</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter officer name">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Badge/ID Number</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter badge/ID number">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Rank</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter rank">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Station/Post</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-1 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter station or post">
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Incident Details Section -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-700 mb-4">Incident Details</h3>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Location of Incident</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter incident location">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Type of Incident</label>
-                        <select class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option>Theft</option>
-                            <option>Assault</option>
-                            <option>Traffic Accident</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Nature of the Incident</label>
-                        <textarea class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Provide a detailed description"></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Evidence Collected</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="List evidence items">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Witnesses</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="List witness names">
-                    </div>
-                    <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Injuries or Damages</label>
-                        <textarea class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="Describe injuries or damages"></textarea>
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Involved Parties Section -->
-            <div class="mb-8">
+                 <!-- Involved Parties Section -->
+            <div class="mb-4 bg-green-200 p-3">
                 <h3 class="text-xl font-semibold text-gray-700 mb-4">Involved Parties</h3>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+                <div class="flex items-center my-4">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="px-4 text-gray-700 font-bold uppercas italic">Complainant</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                        
                     <!-- Complainant Information -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Complainant Name</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter complainant name">
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Complainant Name">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Complainant Contact Information</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter contact details">
+                        <label class="block text-sm font-medium text-gray-700">Complainant Contact</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Complainant Contact">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Complainant Physical Address</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Complainant Physical Address">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Complainant Digital Address</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Complainant Digital Address">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Complainant Occupation</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Complainant Occupation">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Complainant Date of Birth</label>
+                        <input type="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Complainant Occupation">
                     </div>
                     <div class="col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Relationship to Incident</label>
                         <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe relationship to incident">
                     </div>
-                    <!-- Suspect Information -->
+
+                    
+                    </div>
+
+                <div class="flex items-center my-4">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="px-4 text-gray-700 font-bold uppercas italic">Suspect</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+
+                <!-- Suspect Information -->
+                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Suspect Name</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter suspect name">
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Name ofcomplainant">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Physical Description</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe suspect's appearance">
+                        <label class="block text-sm font-medium text-gray-700">Suspect Contact</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Suspect Contact">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Suspect Residential Address</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Suspect Residential Address">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700"></label>Suspect Occupation</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Suspect Occupation">
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Criminal Record</label>
-                        <textarea class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="List previous criminal record (if any)"></textarea>
+                        <label class="block text-sm font-medium text-gray-700">Relationship to Incident</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe relationship to incident">
                     </div>
-                    <!-- Victim Information -->
+                </div>
+                
+                <div class="flex items-center my-4">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="px-3 text-gray-700 font-bold uppercas italic">Victim</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+
+                <!-- Victim Information Section -->
+                <div class="mb-2 p-3">
+                    <!-- Radio Buttons for Same/Different Victim -->
+                    <div class="flex items-center mb-4">
+                        <label class="mr-4">Is the Victim the Same as the Complainant?</label>
+                        <div class="flex items-center mr-4">
+                            <input id="sameVictim" name="victimSameAsComplainant" type="radio" class="mr-2" value="same">
+                            <label for="sameVictim" class="text-sm font-medium text-gray-700">Yes</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="differentVictim" name="victimSameAsComplainant" type="radio" class="mr-2" value="different">
+                            <label for="differentVictim" class="text-sm font-medium text-gray-700">No</label>
+                        </div>
+                    </div>
+
+                    <!-- Victim Information Form Fields (Hidden by Default) -->
+                    <div id="victimInfoForm" class="grid grid-cols-1 gap-4 sm:grid-cols-3 hidden">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Victim Name</label>
+                                <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Name of Victim">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Victim Contact</label>
+                                <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Victim Contact">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Victim Residential Address</label>
+                                <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Victim Residential Address">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700"></label>Victim Occupation</label>
+                                <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Victim Occupation">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Relationship to Incident</label>
+                                <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Describe relationship to incident">
+                            </div>
+                        <!-- Add other victim fields here as needed -->
+                    </div>
+                </div>
+            </div>
+                
+
+            <!-- Incident Details Section -->
+            <div id="incidentDetailsSection" class="mb-8 bg-green-200 p-3">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">Incident Details</h3>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Location of Incident</label>
+                    <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter incident location">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Type of Incident</label>
+                    <select class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option>Theft</option>
+                        <option>Assault</option>
+                        <option>Traffic Accident</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-700">Nature of the Incident</label>
+                    <textarea class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Provide a detailed description"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Evidence Collected</label>
+                    <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="List evidence items">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Witnesses</label>
+                    <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="List witness names">
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-700">Injuries or Damages</label>
+                    <textarea class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="Describe injuries or damages"></textarea>
+                </div>
+            </div>
+            </div>
+            </div>
+
+                
+            </div>
+        
+
+           
+
+            <div id="stepGroup2" class="step-group hidden bg-yellow-100 p-3" data-step-group="2">
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-700">Follow-Up Required</label>
+                    <textarea class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" rows="3" placeholder="Notes on follow-up actions"></textarea>
+                </div>
+            </div>
+
+
+            <div id="stepGroup3" class="step-group hidden bg-red-200" data-step-group="3">
+                <!-- Content for Step 3 -->
+            <!-- Reporting Officer Information Section -->
+            <div class="mb-8 bg-red-200 p-3" id="sameVictim">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">Reporting Officer</h3>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Victim Name</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter victim name">
+                        <label class="block text-sm font-medium text-gray-700">Officer Name</label>
+                        <p class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100">
+                            John Doe <!-- Replace with dynamic data -->
+                        </p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Victim Contact Information</label>
-                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter contact details">
+                        <label class="block text-sm font-medium text-gray-700">Badge/ID Number</label>
+                        <p class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100">
+                            12345 <!-- Replace with dynamic data -->
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Rank</label>
+                        <p class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100">
+                            Sergeant <!-- Replace with dynamic data -->
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Station/Post</label>
+                        <p class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100">
+                            Central Police Station <!-- Replace with dynamic data -->
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Division</label>
+                        <p class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100">
+                            MTTD <!-- Replace with dynamic data -->
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Station/Post</label>
+                        <p class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-100">
+                            Central Police Station <!-- Replace with dynamic data -->
+                        </p>
                     </div>
                 </div>
             </div>
         
             <!-- Legal and Procedural Information Section -->
-            <div class="mb-8">
+            <div class="mb-8 p-3">
                 <h3 class="text-xl font-semibold text-gray-700 mb-4">Legal and Procedural Information</h3>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
@@ -180,13 +323,13 @@
             </div>
         
             <!-- Additional Notes Section -->
-            <div class="mb-8">
+            <div class="mb-8 p-3">
                 <h3 class="text-xl font-semibold text-gray-700 mb-4">Additional Notes</h3>
                 <textarea class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Enter additional observations or comments"></textarea>
             </div>
         
             <!-- Attachments Section -->
-            <div class="mb-8">
+            <div class="mb-8 p-3">
                 <h3 class="text-xl font-semibold text-gray-700 mb-4">Attachments</h3>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
@@ -203,13 +346,100 @@
                     </div>
                 </div>
             </div>
+            </div>
         
+
             <!-- Submit Button -->
             <div class="flex justify-end">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-md shadow-sm">Submit Case</button>
+            <button type="submit" id="continueButton" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-md shadow-sm">Contenuine</button>
             </div>
         </div>
         
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const steps = document.querySelectorAll('#stepper li');
+    const continueButton = document.getElementById('continueButton');
+    const stepGroups = document.querySelectorAll('.step-group');
+    let currentStep = 0;
+
+    // Function to control the visibility of the victim toggle
+    const victimToggle = () => {
+        const sameVictimRadio = document.getElementById('sameVictim');
+        const differentVictimRadio = document.getElementById('differentVictim');
+        const victimInfoForm = document.getElementById('victimInfoForm');
+
+        sameVictimRadio.addEventListener('click', function() {
+            victimInfoForm.classList.add('hidden');
+        });
+
+        differentVictimRadio.addEventListener('click', function() {
+            victimInfoForm.classList.remove('hidden');
+        });
+    };
+
+    // Initialize victim toggle functionality
+    victimToggle();
+
+    // Function to show the current step group and hide others
+    const showCurrentStepGroup = () => {
+        stepGroups.forEach((group, index) => {
+            if (index === currentStep) {
+                group.classList.remove('hidden');
+            } else {
+                group.classList.add('hidden');
+            }
+        });
+    };
+
+    // Initial setup to show the first group
+    showCurrentStepGroup();
+
+    continueButton.addEventListener('click', function() {
+        // Hide the current step group
+        const currentGroup = document.querySelector(`[data-step-group="${currentStep + 1}"]`);
+        if (currentGroup) {
+            currentGroup.classList.add('hidden');
+        }
+
+        // Move to the next step
+        currentStep++;
+
+        // Ensure we do not go beyond the available steps
+        if (currentStep < steps.length) {
+            // Show the next step group
+            showCurrentStepGroup();
+
+            // Update the step indicator
+            steps.forEach((step, index) => {
+                if (index === currentStep) {
+                    step.classList.add('text-blue-600', 'dark:text-blue-500');
+                    step.querySelector('span').classList.add('border-blue-600', 'dark:border-blue-500');
+                } else {
+                    step.classList.remove('text-blue-600', 'dark:text-blue-500');
+                    step.classList.add('text-gray-500', 'dark:text-gray-400');
+                    step.querySelector('span').classList.remove('border-blue-600', 'dark:border-blue-500');
+                    step.querySelector('span').classList.add('border-gray-500', 'dark:border-gray-400');
+                }
+            });
+
+            // Change button text on the last step
+            if (currentStep === steps.length - 1) {
+                continueButton.textContent = 'Register Docket';
+            }
+        }
+
+        // Disable button if there are no more steps
+        if (currentStep >= steps.length) {
+            continueButton.disabled = true;
+            continueButton.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    });
+});
+
+
+
+
+    </script>
 </body>
 </html>
