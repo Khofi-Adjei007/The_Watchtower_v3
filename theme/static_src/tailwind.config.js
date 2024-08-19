@@ -42,7 +42,23 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            keyframes: {
+                breathing: {
+                    '0%, 100%': {
+                        transform: 'scale(1)',
+                        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 255, 0.3)',
+                    },
+                    '50%': {
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 0 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 255, 0.5)',
+                    },
+                },
+            },
+            animation: {
+                breathing: 'breathing 3s ease-in-out infinite',
+            },
+        },
     },
     plugins: [
         /**

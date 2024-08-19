@@ -240,3 +240,84 @@ class PDFDocument(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+
+class Case(models.Model):
+    # Case Information
+    Case_Title = models.CharField(max_length=255)
+    date_time_of_incident = models.DateTimeField()
+    date_time_of_report = models.DateTimeField()
+
+    # Complainant Information
+    complainant_name = models.CharField(max_length=255)
+    complainant_contact = models.CharField(max_length=20)
+    complainant_physical_address = models.CharField(max_length=255)
+    complainant_digital_address = models.CharField(max_length=255, blank=True, null=True)
+    complainant_occupation = models.CharField(max_length=100, blank=True, null=True)
+    complainant_date_of_birth = models.DateField(blank=True, null=True)
+
+    # Suspect Information
+    suspect_name = models.CharField(max_length=255, blank=True, null=True)
+    suspect_contact = models.CharField(max_length=20, blank=True, null=True)
+    suspect_physical_address = models.CharField(max_length=255, blank=True, null=True)
+    suspect_digital_address = models.CharField(max_length=255, blank=True, null=True)
+    suspect_occupation = models.CharField(max_length=100, blank=True, null=True)
+    suspect_date_of_birth = models.DateField(blank=True, null=True)
+
+    # Victim Information
+    is_victim_same_as_complainant = models.BooleanField(default=True)
+    victim_name = models.CharField(max_length=255, blank=True, null=True)
+    victim_contact = models.CharField(max_length=20, blank=True, null=True)
+    victim_physical_address = models.CharField(max_length=255, blank=True, null=True)
+    victim_digital_address = models.CharField(max_length=255, blank=True, null=True)
+    victim_occupation = models.CharField(max_length=100, blank=True, null=True)
+    victim_date_of_birth = models.DateField(blank=True, null=True)
+
+    # Incident Details
+    location_of_incident = models.CharField(max_length=255)
+    type_of_incident = models.CharField(max_length=100, choices=[
+        ('Theft', 'Theft'),
+        ('Assault', 'Assault'),
+        ('Traffic Accident', 'Traffic Accident'),
+        ('Other', 'Other')
+    ])
+    statement_of_incident = models.TextField()
+
+    # Key Witness Information
+    key_witness_name = models.CharField(max_length=255, blank=True, null=True)
+    key_witness_contact = models.CharField(max_length=20, blank=True, null=True)
+    key_witness_physical_address = models.CharField(max_length=255, blank=True, null=True)
+    key_witness_digital_address = models.CharField(max_length=255, blank=True, null=True)
+
+    # Step 2 Fields: Statements and Additional Witnesses
+    complainant_statement = models.TextField()
+    suspect_statement = models.TextField()
+    witness_statement = models.TextField()
+    additional_witnesses = models.JSONField(default=list, blank=True)  # Handles up to 5 additional witnesses
+
+    # Step 3 Fields: Reporting Officer and Case Progression
+    reporting_officer_name = models.CharField(max_length=255, blank=True, null=True)
+    reporting_officer_badge_id = models.CharField(max_length=50, blank=True, null=True)
+    reporting_officer_rank = models.CharField(max_length=50, blank=True, null=True)
+    reporting_officer_station = models.CharField(max_length=255, blank=True, null=True)
+    reporting_officer_division = models.CharField(max_length=255, blank=True, null=True)
+    charges_filed = models.TextField(blank=True, null=True)
+    legal_actions_taken = models.TextField(blank=True, null=True)
+    assigned_investigator = models.CharField(max_length=255, blank=True, null=True)
+    case_status = models.CharField(max_length=50, choices=[
+        ('Open', 'Open'),
+        ('Under Investigation', 'Under Investigation'),
+        ('Closed', 'Closed')
+    ], blank=True, null=True)
+    follow_up_required = models.TextField(blank=True, null=True)
+    additional_notes = models.TextField(blank=True, null=True)
+
+    # Attachments
+    mugshot = models.FileField(upload_to='mugshots/', blank=True, null=True)
+    fingerprint = models.FileField(upload_to='fingerprints/', blank=True, null=True)
+
+    def __str__(self):
+        return self.case_title

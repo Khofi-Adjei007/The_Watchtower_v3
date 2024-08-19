@@ -11,8 +11,6 @@ from django.shortcuts import render, redirect
 
 
 
-
-
 # Forms and Authentications goes here
 class officerRegistrationsForms(forms.Form):
 
@@ -23,7 +21,6 @@ class officerRegistrationsForms(forms.Form):
             'officer_qualification': forms.Select(choices=NewOfficerRegistration.EDUCATION_QUALIFICATION_CHOICES),
             'officer_current_rank': forms.Select(choices=NewOfficerRegistration.OFFICER_RANK_CHOICES)
         }
-
     first_name = forms.CharField(label="Enter first Name", max_length=100,
                                  error_messages={'required': 'First Name is Required .',
                                                     'invalid': 'Name is Invalid.'})

@@ -36,6 +36,12 @@ from django.http import JsonResponse
 logger = logging.getLogger(__name__)
 from django.utils import timezone
 from reportlab.lib.pagesizes import A4
+from .docketvalidationForms import CaseStep1Form, CaseStep2Form, CaseStep3Form
+from .models import Case
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from .models import NewOfficerRegistration
 
 
 # Home Selector
@@ -43,9 +49,202 @@ from reportlab.lib.pagesizes import A4
 def selectPurpose(request):
     return render(request, 'selectPurpose.html')
 
-@csrf_protect
+# Route to Search Database
+def searchdatabase(request):
+    return render(request, 'searchdatabase.html')
+
+# Route to get cases and thier progress
+def casesProgress(request):
+    return render(request, 'casesProgress.html')
+
+# Route to command messaging
+def commandmessaging(request):
+    return render(request, 'commandmessaging.html')
+
+
+    
 def docketforms(request):
-    return render(request, 'docketforms.html')
+    # Initialize forms for all steps
+    form_step1 = CaseStep1Form()
+    form_step2 = CaseStep2Form()
+    form_step3 = CaseStep3Form()
+
+    if request.method == 'POST':
+        # Process form submission for step 1
+        form_step1 = CaseStep1Form(request.POST)
+        if form_step1.is_valid():
+            # Handle the valid form, e.g., save data or redirect
+            return redirect('next_step_view')  # Adjust the URL as needed
+        # If the form is not valid, it will fall through to render with errors
+        # Keep form_step2 and form_step3 as initialized above
+
+    # Render the forms in the template
+    return render(request, 'docketforms.html', {
+        'form_step1': form_step1,
+        'form_step2': form_step2,
+        'form_step3': form_step3,
+    })
+
+def CaseStep1View(request):
+    if request.method == 'POST':
+        form = CaseStep1Form(request.POST)  # Instantiate the form with POST data
+        if form.is_valid():
+            # Store form data in session
+            request.session['case_title'] = form.cleaned_data.get('case_title')
+            request.session['date_time_of_incident'] = form.cleaned_data.get('date_time_of_incident')
+            request.session['date_time_of_report'] = form.cleaned_data.get('date_time_of_report')
+
+            # Complainant Information
+            request.session['complainant_name'] = form.cleaned_data.get('complainant_name')
+            request.session['complainant_contact'] = form.cleaned_data.get('complainant_contact')
+            request.session['complainant_physical_address'] = form.cleaned_data.get('complainant_physical_address')
+            request.session['complainant_digital_address'] = form.cleaned_data.get('complainant_digital_address')
+            request.session['complainant_occupation'] = form.cleaned_data.get('complainant_occupation')
+            request.session['complainant_date_of_birth'] = form.cleaned_data.get('complainant_date_of_birth')
+
+            # Suspect Information
+            request.session['suspect_name'] = form.cleaned_data.get('suspect_name')
+            request.session['suspect_contact'] = form.cleaned_data.get('suspect_contact')
+            request.session['suspect_physical_address'] = form.cleaned_data.get('suspect_physical_address')
+            request.session['suspect_digital_address'] = form.cleaned_data.get('suspect_digital_address')
+            request.session['suspect_occupation'] = form.cleaned_data.get('suspect_occupation')
+            request.session['suspect_date_of_birth'] = form.cleaned_data.get('suspect_date_of_birth')
+
+            # Victim Information
+            request.session['is_victim_same_as_complainant'] = form.cleaned_data.get('is_victim_same_as_complainant')
+            request.session['victim_name'] = form.cleaned_data.get('victim_name')
+            request.session['victim_contact'] = form.cleaned_data.get('victim_contact')
+            request.session['victim_physical_address'] = form.cleaned_data.get('victim_physical_address')
+            request.session['victim_digital_address'] = form.cleaned_data.get('victim_digital_address')
+            request.session['victim_occupation'] = form.cleaned_data.get('victim_occupation')
+            request.session['victim_date_of_birth'] = form.cleaned_data.get('victim_date_of_birth')
+
+            # Incident Details
+            request.session['location_of_incident'] = form.cleaned_data.get('location_of_incident')
+            request.session['type_of_incident'] = form.cleaned_data.get('type_of_incident')
+            request.session['statement_of_incident'] = form.cleaned_data.get('statement_of_incident')
+
+            # Key Witness Information
+            request.session['key_witness_name'] = form.cleaned_data.get('key_witness_name')
+            request.session['key_witness_contact'] = form.cleaned_data.get('key_witness_contact')
+            request.session['key_witness_physical_address'] = form.cleaned_data.get('key_witness_physical_address')
+            request.session['key_witness_digital_address'] = form.cleaned_data.get('key_witness_digital_address')
+
+            # Proceed to the next step or save the data
+            return redirect('CaseStep2Form')  # Replace 'step2' with the name of the URL pattern for the next step
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = CaseStep1Form()  # Instantiate an empty form
+    return render(request, 'docketforms.html', {'form': form})
+
+def CaseStep2View(request):
+    if request.method == 'POST':
+        form = CaseStep2Form(request.POST)
+        if form.is_valid():
+            # Store form data in session
+            request.session['complainant_statement'] = form.cleaned_data.get('complainant_statement')
+            request.session['suspect_statement'] = form.cleaned_data.get('suspect_statement')
+            request.session['witness_statement'] = form.cleaned_data.get('witness_statement')
+            request.session['additional_witnesses'] = form.cleaned_data.get('additional_witnesses')
+
+            # Proceed to the next step or save the data
+            return redirect('CaseStep3Form')  # Replace 'step3' with the name of the URL pattern for the next step
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = CaseStep2Form()  # Instantiate an empty form
+    
+    return render(request, 'docketforms.html', {'form': form})
+
+def CaseStep3View(request):
+    if request.method == 'POST':
+        form = CaseStep3Form(request.POST, request.FILES)  # Handle both POST data and uploaded files
+        if form.is_valid():
+            # Retrieve data from the session
+            case_data = {
+                'case_title': request.session.get('case_title'),
+                'date_time_of_incident': request.session.get('date_time_of_incident'),
+                'date_time_of_report': request.session.get('date_time_of_report'),
+
+                # Complainant Information
+                'complainant_name': request.session.get('complainant_name'),
+                'complainant_contact': request.session.get('complainant_contact'),
+                'complainant_physical_address': request.session.get('complainant_physical_address'),
+                'complainant_digital_address': request.session.get('complainant_digital_address'),
+                'complainant_occupation': request.session.get('complainant_occupation'),
+                'complainant_date_of_birth': request.session.get('complainant_date_of_birth'),
+
+                # Suspect Information
+                'suspect_name': request.session.get('suspect_name'),
+                'suspect_contact': request.session.get('suspect_contact'),
+                'suspect_physical_address': request.session.get('suspect_physical_address'),
+                'suspect_digital_address': request.session.get('suspect_digital_address'),
+                'suspect_occupation': request.session.get('suspect_occupation'),
+                'suspect_date_of_birth': request.session.get('suspect_date_of_birth'),
+
+                # Victim Information
+                'is_victim_same_as_complainant': request.session.get('is_victim_same_as_complainant'),
+                'victim_name': request.session.get('victim_name'),
+                'victim_contact': request.session.get('victim_contact'),
+                'victim_physical_address': request.session.get('victim_physical_address'),
+                'victim_digital_address': request.session.get('victim_digital_address'),
+                'victim_occupation': request.session.get('victim_occupation'),
+                'victim_date_of_birth': request.session.get('victim_date_of_birth'),
+
+                # Incident Details
+                'location_of_incident': request.session.get('location_of_incident'),
+                'type_of_incident': request.session.get('type_of_incident'),
+                'statement_of_incident': request.session.get('statement_of_incident'),
+
+                # Key Witness Information
+                'key_witness_name': request.session.get('key_witness_name'),
+                'key_witness_contact': request.session.get('key_witness_contact'),
+                'key_witness_physical_address': request.session.get('key_witness_physical_address'),
+                'key_witness_digital_address': request.session.get('key_witness_digital_address'),
+
+                # Final step data from the current form submission
+                'reporting_officer_name': form.cleaned_data.get('reporting_officer_name'),
+                'reporting_officer_badge_id': form.cleaned_data.get('reporting_officer_badge_id'),
+                'reporting_officer_rank': form.cleaned_data.get('reporting_officer_rank'),
+                'reporting_officer_station': form.cleaned_data.get('reporting_officer_station'),
+                'reporting_officer_division': form.cleaned_data.get('reporting_officer_division'),
+                'charges_filed': form.cleaned_data.get('charges_filed'),
+                'legal_actions_taken': form.cleaned_data.get('legal_actions_taken'),
+                'assigned_investigator': form.cleaned_data.get('assigned_investigator'),
+                'case_status': form.cleaned_data.get('case_status'),
+                'follow_up_required': form.cleaned_data.get('follow_up_required'),
+                'additional_notes': form.cleaned_data.get('additional_notes'),
+            }
+
+            # Handle file uploads separately and add to case_data
+            mugshot = form.cleaned_data.get('mugshot')
+            fingerprint = form.cleaned_data.get('fingerprint')
+
+            # Create the Docket instance with all the collected data
+            docket = docketforms.objects.create(**case_data)
+
+            # Save the files if they exist
+            if mugshot:
+                docket.mugshot = mugshot
+            if fingerprint:
+                docket.fingerprint = fingerprint
+            docket.save()
+
+            # Clear the session after saving
+            request.session.flush()
+
+            messages.success(request, "Docket successfully registered.")
+            return redirect('success_page')  # Replace with the name of your success URL
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = CaseStep3Form()  # Instantiate an empty form for GET requests
+
+    return render(request, 'docketforms.html', {'form': form})
+
+
+
 
 # officer Registrations Views
 def redirect_with_delay(request, url, delay_seconds=3):
@@ -98,6 +297,19 @@ def officer_registrations(request):
     return render(request, 'officer_registrations.html', {"form": form})
 
 
+# badge Verification view
+@csrf_exempt
+@require_POST
+def verify_badge(request):
+    badge_number = request.POST.get('officer_staff_ID')
+    if NewOfficerRegistration.objects.filter(officer_staff_ID=badge_number).exists():
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid badge number'})
+
+
+
+
 
 # officer login views
 @csrf_protect
@@ -116,7 +328,7 @@ def officer_login(request):
                 if hasattr(user, 'newofficerregistration'):
                     request.session['officer_staff_ID'] = user.newofficerregistration.officer_staff_ID
                     request.session['officer_current_rank'] = user.newofficerregistration.officer_current_rank
-                return redirect('HomePage')
+                return redirect('selectPurpose')
             else:
                 error_message = 'Invalid username or password'
         else:

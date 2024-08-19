@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import queue_statement, check_session, clear_session
+from .views import queue_statement, check_session, clear_session, verify_badge
 
 
 
@@ -21,6 +21,13 @@ urlpatterns = [
     path('profile_view/', views.profile_view, name='profile_view'),
     path('selectPurpose/', views.selectPurpose, name='selectPurpose'),
     path('docketforms/', views.docketforms, name='docketforms'),
+    path('searchdatabase/', views.searchdatabase, name='searchdatabase'),
+    path('casesProgress/', views.casesProgress, name='casesProgress'),
+    path('commandmessaging/', views.commandmessaging, name='commandmessaging'),
+    path('docketforms/CaseStep1Form/', views.CaseStep1Form, name='CaseStep1Form'),
+    path('docketforms/CaseStep2Form/', views.CaseStep2Form, name='CaseStep2Form'),
+    path('docketforms/CaseStep3Form/', views.CaseStep3Form, name='CaseStep3Form'),
+    path('verify_badge/', verify_badge, name='verify_badge'),
 ]
 
 if settings.DEBUG:
