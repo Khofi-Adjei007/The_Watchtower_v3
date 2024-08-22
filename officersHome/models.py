@@ -291,12 +291,13 @@ class Case(models.Model):
     key_witness_contact = models.CharField(max_length=20, blank=True, null=True)
     key_witness_physical_address = models.CharField(max_length=255, blank=True, null=True)
     key_witness_digital_address = models.CharField(max_length=255, blank=True, null=True)
+    
 
     # Step 2 Fields: Statements and Additional Witnesses
     complainant_statement = models.TextField()
     suspect_statement = models.TextField()
     witness_statement = models.TextField()
-    additional_witnesses = models.JSONField(default=list, blank=True)  # Handles up to 5 additional witnesses
+    additional_witnesses = models.JSONField(default=list, blank=True)
 
     # Step 3 Fields: Reporting Officer and Case Progression
     reporting_officer_name = models.CharField(max_length=255, blank=True, null=True)
